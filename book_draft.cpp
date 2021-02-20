@@ -44,7 +44,7 @@ void book_seat(string bk)
     }
         booklist[num-1] = bk.substr(start,bk.size()-start);    
 	fstream source;
-	source.open("Booking.txt"); 
+	source.open("Booking.txt", ios::app); 
 	for(int j=0;j<num;j++)
 	{
 		source << booklist[j] << "\n";
