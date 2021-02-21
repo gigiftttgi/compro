@@ -1,6 +1,5 @@
 #pragma once
 #include "admin_menu.h"
-
 namespace Project {
 
 	using namespace System;
@@ -36,9 +35,9 @@ namespace Project {
 			}
 		}
 	private: System::Windows::Forms::Label^ label1;
-	protected:
-	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::TextBox^ textBox1;
+	protected:
 
 	private:
 		/// <summary>
@@ -54,53 +53,58 @@ namespace Project {
 		void InitializeComponent(void)
 		{
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 19.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(222)));
-			this->label1->Location = System::Drawing::Point(118, 181);
+			this->label1->Location = System::Drawing::Point(143, 201);
+			this->label1->Margin = System::Windows::Forms::Padding(9, 0, 9, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(161, 32);
+			this->label1->Size = System::Drawing::Size(180, 38);
 			this->label1->TabIndex = 0;
-			this->label1->Text = L"Password : ";
+			this->label1->Text = L"Password :";
 			this->label1->Click += gcnew System::EventHandler(this, &login_admin::label1_Click);
-			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(285, 181);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(352, 34);
-			this->textBox1->TabIndex = 1;
-			this->textBox1->UseSystemPasswordChar = true;
-			this->textBox1->TextChanged += gcnew System::EventHandler(this, &login_admin::textBox1_TextChanged);
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(340, 283);
+			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(222)));
+			this->button1->Location = System::Drawing::Point(324, 290);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(115, 40);
-			this->button1->TabIndex = 2;
+			this->button1->Size = System::Drawing::Size(148, 47);
+			this->button1->TabIndex = 1;
 			this->button1->Text = L"Login";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &login_admin::button1_Click);
 			// 
+			// textBox1
+			// 
+			this->textBox1->Location = System::Drawing::Point(345, 192);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(320, 53);
+			this->textBox1->TabIndex = 2;
+			this->textBox1->UseSystemPasswordChar = true;
+			// 
 			// login_admin
 			// 
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
-			this->ClientSize = System::Drawing::Size(802, 480);
-			this->Controls->Add(this->button1);
+			this->AutoScaleDimensions = System::Drawing::SizeF(23, 46);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(832, 513);
 			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->label1);
-			this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(222)));
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->Margin = System::Windows::Forms::Padding(9);
 			this->Name = L"login_admin";
 			this->Text = L"login_admin";
+			this->Load += gcnew System::EventHandler(this, &login_admin::login_admin_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -110,23 +114,21 @@ namespace Project {
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		int count = 0;
-		if (textBox1->Text == "1") {
+		if (textBox1->Text == "keypass") {
 			this->Hide();
-			admin_menu^ form2 = gcnew admin_menu();
-			form2->ShowDialog();
-			
+			admin_menu^ form = gcnew admin_menu();
+			form->ShowDialog();
 		}
 		else {
 			MessageBox::Show("Incorrect Password"), MessageBoxButtons::OK, MessageBoxIcon::Error;
 			count = count + 1;
-			if (count == 5 ) {
+			if (count == 5) {
 				MessageBox::Show("System lock!!! Please wait and try again"), MessageBoxIcon::Error, MessageBoxButtons::OK;
 				Application::Exit();
 			}
 		}
-
 	}
-	private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void login_admin_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
-	};
+};
 }
