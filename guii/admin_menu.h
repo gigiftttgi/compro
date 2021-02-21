@@ -1,5 +1,5 @@
 #pragma once
-#include "home.h"
+
 
 namespace Project {
 
@@ -67,37 +67,44 @@ namespace Project {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(112, 67);
-			this->label1->Margin = System::Windows::Forms::Padding(6, 0, 6, 0);
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(222)));
+			this->label1->Location = System::Drawing::Point(66, 61);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(86, 32);
+			this->label1->Size = System::Drawing::Size(119, 46);
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"Menu";
 			this->label1->Click += gcnew System::EventHandler(this, &admin_menu::label1_Click);
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(164, 136);
+			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(222)));
+			this->button1->Location = System::Drawing::Point(153, 122);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(248, 40);
+			this->button1->Size = System::Drawing::Size(230, 43);
 			this->button1->TabIndex = 1;
 			this->button1->Text = L"Add movie";
 			this->button1->UseVisualStyleBackColor = true;
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(164, 204);
+			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(222)));
+			this->button2->Location = System::Drawing::Point(153, 187);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(248, 42);
+			this->button2->Size = System::Drawing::Size(230, 49);
 			this->button2->TabIndex = 2;
 			this->button2->Text = L"Change movie";
 			this->button2->UseVisualStyleBackColor = true;
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(164, 277);
+			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(222)));
+			this->button3->Location = System::Drawing::Point(153, 262);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(248, 39);
+			this->button3->Size = System::Drawing::Size(230, 43);
 			this->button3->TabIndex = 3;
 			this->button3->Text = L"Check movie";
 			this->button3->UseVisualStyleBackColor = true;
@@ -106,20 +113,20 @@ namespace Project {
 			// 
 			this->button4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(222)));
-			this->button4->Location = System::Drawing::Point(164, 353);
+			this->button4->Location = System::Drawing::Point(153, 328);
 			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(248, 43);
+			this->button4->Size = System::Drawing::Size(230, 47);
 			this->button4->TabIndex = 4;
 			this->button4->Text = L"Check valiable seat";
 			this->button4->UseVisualStyleBackColor = true;
 			// 
 			// button5
 			// 
-			this->button5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->button5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(222)));
-			this->button5->Location = System::Drawing::Point(657, 412);
+			this->button5->Location = System::Drawing::Point(681, 434);
 			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(75, 33);
+			this->button5->Size = System::Drawing::Size(86, 38);
 			this->button5->TabIndex = 5;
 			this->button5->Text = L"Back";
 			this->button5->UseVisualStyleBackColor = true;
@@ -127,21 +134,19 @@ namespace Project {
 			// 
 			// admin_menu
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(16, 31);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(802, 480);
+			this->ClientSize = System::Drawing::Size(832, 513);
 			this->Controls->Add(this->button5);
 			this->Controls->Add(this->button4);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->label1);
-			this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(222)));
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
-			this->Margin = System::Windows::Forms::Padding(6);
 			this->Name = L"admin_menu";
 			this->Text = L"admin_menu";
+			this->Load += gcnew System::EventHandler(this, &admin_menu::admin_menu_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -150,9 +155,9 @@ namespace Project {
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->Hide();
-		home^ form2 = gcnew home();
-		form2->ShowDialog();
+	
 	}
+private: System::Void admin_menu_Load(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
