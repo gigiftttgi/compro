@@ -1,5 +1,6 @@
 #pragma once
 #include "login_admin.h"
+#include "showtime.h"
 
 namespace Project {
 
@@ -63,7 +64,7 @@ namespace Project {
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(222)));
-			this->label1->Location = System::Drawing::Point(111, 104);
+			this->label1->Location = System::Drawing::Point(122, 93);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(568, 69);
 			this->label1->TabIndex = 0;
@@ -71,22 +72,23 @@ namespace Project {
 			// 
 			// button1
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(222)));
-			this->button1->Location = System::Drawing::Point(324, 216);
+			this->button1->Location = System::Drawing::Point(343, 225);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(145, 57);
+			this->button1->Size = System::Drawing::Size(131, 44);
 			this->button1->TabIndex = 1;
 			this->button1->Text = L"User";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &home::button1_Click);
 			// 
 			// button2
 			// 
-			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(222)));
-			this->button2->Location = System::Drawing::Point(324, 308);
+			this->button2->Location = System::Drawing::Point(343, 324);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(145, 58);
+			this->button2->Size = System::Drawing::Size(131, 42);
 			this->button2->TabIndex = 2;
 			this->button2->Text = L"Admin";
 			this->button2->UseVisualStyleBackColor = true;
@@ -96,25 +98,27 @@ namespace Project {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(802, 480);
+			this->ClientSize = System::Drawing::Size(832, 513);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->label1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Name = L"home";
 			this->Text = L"home";
-			this->Load += gcnew System::EventHandler(this, &home::home_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void home_Load(System::Object^ sender, System::EventArgs^ e) {
-	}
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Hide();
-		login_admin^ form2 = gcnew login_admin();
+		login_admin^ form = gcnew login_admin();
+		form->ShowDialog();
+	}
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Hide();
+		showtime^ form2 = gcnew showtime();
 		form2->ShowDialog();
 	}
-	};
+};
 }
