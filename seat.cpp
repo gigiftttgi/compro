@@ -1,72 +1,84 @@
 #include<iostream>
 #include<string>
-#include<iomanip>
+#include<cstring>
+#include<fstream>
+#include<vector>
 using namespace std;
 
-const int numof_row = 5;
-const int numof_col = 8;
-
-void update_seat(bool [][numof_col],int , int);
-void show_seat(const bool [][numof_col]);
+void show_seat(int );
+void update_seat(int );
+void clear_seat(int );
 
 int main(){
-    bool av_seat[numof_row][numof_col] = {};
-    int seat,row,col;
-    char char_row;
-    cout << "Enter seat : ";
-    cin >> char_row >> col;
-    switch(char_row){
-        case('A') : row = 4; break;
-        case('B') : row = 3; break;
-        case('C') : row = 2; break;
-        case('D') : row = 1; break;
-        case('E') : row = 0; break;
-    }
-    update_seat(av_seat,row,col);
-    show_seat(av_seat);
+    int mt;
+    cin >> mt;
+    clear_seat(mt);
 }
 
-void update_seat(bool av_seat[][numof_col],int row, int col){
-    for(int i = 0;i<numof_row; i++){
-        for(int j=0; j<numof_col; j++){
-            if(row != 4 ){
-                if(col >=4 ) col = col+1;
-                if(i == row && j == col) av_seat[i][j+1] = 1; break;
-            }
-            else{
-                switch(col){
-                    case(1) : col = 2; break;
-                    case(2) : col = 3; break;
-                    case(3) : col = 5; break;
-                    case(4) : col = 6; break;
-                }
-                if(i == row && j == col) av_seat[i][j] = 1;
-            }
+void show_seat(int mt){
+    //open Booklist file and read the data
+    fstream source;
+    source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m1t1.txt");
+    string textline;
+    char char_row[2];
+    int i = 0, N = 0;
+    int col[28] = {};
+    int row[28] = {};
+    // read the data and covert to row,col to book the seat
+    while(getline(source,textline)){
+        if(i%2 == 0) {
+            strcpy(char_row,textline.c_str());
+            if(char_row[0] == 'E') row[i] = 0;
+            if(char_row[0] == 'D') row[i] = 1;
+            if(char_row[0] == 'C') row[i] = 2;
+            if(char_row[0] == 'B') row[i] = 3;
+            if(char_row[0] == 'A') row[i] = 4;
         }
+        else col[i-1] = stoi(textline);
+        i++;
+    }
+    source.close();
+
+    // update data one by one
+    int position;
+    for(int j = 0; j<i; j+=2){
+        //switch seat array from 2 dimension to 1 dimension
+        position = row[j]*6-1+col[j];
+        cout<<row[j]<<" "<<col[j]<<" "<<position<<endl;
+        update_seat(position);
     }
 }
 
-
-void show_seat(const bool av_seat[numof_row][numof_col]){
-    cout<<setw(40)<<"| | = avaible , |X| = booked\n";
-    cout<<setw(40)<<"-----------SCREEN----------\n";
-    for(int i = 0; i<numof_row;i++){
-        for(int j = 0; j<numof_col;j++){
-            if(j == 0){
-                if(i == 0) cout<<"E\t";
-                if(i == 1) cout<<"D\t";
-                if(i == 2) cout<<"C\t";
-                if(i == 3) cout<<"B\t";
-                if(i == 4) cout<<"A\t";
-            }
-            else if(i == 4 && j == 1) cout<<setw(5)<<" ";
-            else if(i == 4 && j == 7) cout<<setw(5)<<"  \t  ";
-            else if(j == 4) cout <<"\t";
-            else if(av_seat[i][j] == 1) cout<<setw(5)<<"|X| ";
-            else cout<<setw(5)<<"| | ";
+void update_seat(int position){
+    // open seat file
+    ifstream source("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt");
+    string textline;
+    int new_seat[28];
+    int i = 0;
+    // update the seat into new_seat
+    while(getline(source,textline)){
+        if(i == position){
+            new_seat[i] = 1;
         }
-        cout<<"\n";
+        else{
+            new_seat[i] = stoi(textline);
+        }
+        i++;
     }
+    source.close();
+
+    // push all new data into the same file
+    ofstream copy_source("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt");
+    for(int j = 0; j<i; j++){
+        copy_source << new_seat[j] << endl;
+    }
+
 }
 
-
+void clear_seat(int mt){
+    //this function for admin when they update the movie and seat need to be clear
+    ofstream copy_source("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt");
+    for(int j = 0; j<28; j++){
+        copy_source << "0" << endl;
+    }
+}
