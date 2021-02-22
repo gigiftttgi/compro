@@ -1,14 +1,7 @@
 //สร้างแยกไว้ก่อน
 #include<iostream>
-#include<string>
-#include<fstream>
-#include<cstring>
 #include<iomanip>
 using namespace std;
-
-int num, booklist, mt;
-string name;
-
 
 //ไม่มั่นใจว่าต้องเอาฟังก์ชั่นนี้ไปใส่ตรงไหน เลยเอาแยกไว้ตรงนี้ก่อน 
 void showbill(){
