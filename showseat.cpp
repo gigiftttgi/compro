@@ -4,6 +4,7 @@
 #include<fstream>
 #include<iomanip>
 #include<vector>
+
 using namespace std;
 
 void read_seat(int );
@@ -12,11 +13,11 @@ void clear_seat(int );
 void show_seat();
 
 int main(){
-    int mt;
-    cin >> mt;
+    //int mt;
+    //cin >> mt;
     //to do all function read,update,show you only call read_seat function
     //mt is switch condition which leads to open different files for differents case
-    read_seat(mt);
+    read_seat(1);
 }
 
 void read_seat(int mt){
@@ -99,20 +100,21 @@ void show_seat(){
     ifstream source("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt");
     string textline;
     int new_seat[28];
-    int i = 0,n=4;
+    int i = 0,n=1;
     while(getline(source,textline)){
         new_seat[i] = stoi(textline);
         i++;
     }
     source.close();
 
-    char row[5] = {'A','B','C','D','E'};
+    char row[5] = {'E','D','C','B'};
+    char display[2] = {'\0', 'X'};
 
     cout<<setw(25)<<"-----------------------------------------\n";
     cout<<setw(25)<<"|SCREEN|\n";
 
-    //display normal row E-B
-    
+    //display normal row E-B 
+
     for(int i = 0; i<23; i = i+6){
         cout<<row[n-1]<<"\t";
         for(int j = i; j<6+i; j++){
@@ -125,7 +127,6 @@ void show_seat(){
         n++;
     }
 
-    
     //display sofa row A
     //the bug is seat C6 (position == 17) is not working
     
