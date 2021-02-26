@@ -111,25 +111,18 @@ void show_seat(){
     cout<<setw(25)<<"-----------------------------------------\n";
     cout<<setw(25)<<"|SCREEN|\n";
 
-    //display normal row E-B 
-    //varible n to display E D C B can change anytime when theater got bigger
-    //condition of k can calculate with number of each row's seat -1 * number of row // in this case is 4*7
+    //display normal row E-B
+    
+    for(int i = 0; i<23; i = i+6){
+        cout<<row[n-1]<<"\t";
+        for(int j = i; j<6+i; j++){
+            if(new_seat[j] == 0) cout<<"| | ";
+            if(new_seat[j] == 1) cout<<"|X| ";
+            else if(j == 2+i) cout<<"\t";
 
-    for(int k = 0; k<28; k = k+7){
-        cout<<row[n]<<"\t";
-        for(int j = 0+k; j<7+k; j++){
-            if(j<3+k){
-                if(new_seat[j] == 0) cout<<setw(2)<<"| |"<<" ";
-                else if(new_seat[j] == 1) cout<<setw(2)<<"|X|"<<" ";
-            }
-            else if(j > 3+k){
-                if(new_seat[j-1] == 0) cout<<setw(2)<<"| |"<<" ";
-                else if(new_seat[j-1] == 1) cout<<setw(2)<<"|X|"<<" ";
-            }
-            else cout<<"\t";
         }
-        n--;
         cout<<"\n";
+        n++;
     }
 
     
