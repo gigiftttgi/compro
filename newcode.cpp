@@ -189,7 +189,7 @@ void user(){
 	show_seat(mt);
 	cout << "\nChoose seat : ";
 	getline(cin,book);
-	cout<<"here";
+	cout<<"\nhere\n";
 	book_seat(book);
 	read_seat(mt);
 }
@@ -233,13 +233,14 @@ void filebooklist(int mt)
 	} 
 	source.close();
 	read_seat(mt);
+	show_seat(mt);
 	bill(mt);
 }
 
 void bill(int mt)
 {
 	string name;
-	cout << "Enter name : ";
+	cout << "\nEnter name : ";
 	getline(cin,name);
 	cout << "Seat : ";
 	for(int i=0;i<num;i++)
@@ -367,12 +368,11 @@ void update_seat(int position)
 		case 11 : source.open("seat_m3t2.txt"); break;
 		case 12 : source.open("seat_m3t3.txt"); break;
 	}
-    for(int j = 0; j<i; j++)
+    for(int j = 0; j<28; j++)
 	{
         copy_source << new_seat[j] << endl;
     }
     copy_source.close();
-	show_seat(mt);
 }
 
 /*void clear_seat(int mt){
