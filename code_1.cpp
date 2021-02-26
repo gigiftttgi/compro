@@ -17,15 +17,15 @@ void user();
 void list(int);
 void book_seat(string);
 void filebooklist(int);
-void bill();
+void bill(int );
 void read_seat(int );
 void update_seat(int );
 void clear_seat(int );
-void show_seat();
+void show_seat(int );
 
-string fileseat[9]={"seat_m1t1.txt","seat_m1t2.txt","seat_m1t3.txt","seat_m2t1.txt","seat_m2t2.txt","seat_m2t3.txt","seat_m3t1.txt","seat_m3t2.txt","seat_m3t3.txt"};
-string filebill[9]={"Bill_m1t1.txt","Bill_m1t2.txt","Bill_m1t3.txt","Bill_m2t1.txt","Bill_m2t2.txt","Bill_m2t3.txt","Bill_m3t1.txt","Bill_m3t2.txt","Bill_m3t3.txt"};
-string filelist[9]={"Booklist_m1t1.txt","Booklist_m1t2.txt","Booklist_m1t3.txt","Booklist_m2t1.txt","Booklist_m2t2.txt","Booklist_m2t3.txt","Booklist_m3t1.txt","Booklist_m3t2.txt","Booklist_m3t3.txt"};
+//string fileseat[9]={"\"D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt\"","seat_m1t2.txt","seat_m1t3.txt","seat_m2t1.txt","seat_m2t2.txt","seat_m2t3.txt","seat_m3t1.txt","seat_m3t2.txt","seat_m3t3.txt"};
+//string filebill[9]={"D:\\Desktop\\code\\project - movie\\compro\\Bill_m1t1.txt","Bill_m1t2.txt","Bill_m1t3.txt","Bill_m2t1.txt","Bill_m2t2.txt","Bill_m2t3.txt","Bill_m3t1.txt","Bill_m3t2.txt","Bill_m3t3.txt"};
+//string filelist[9]={"\"D:\\Desktop\\code\\project - movie\\compro\\Booklist_m1t1.txt\"","Booklist_m1t2.txt","Booklist_m1t3.txt","Booklist_m2t1.txt","Booklist_m2t2.txt","Booklist_m2t3.txt","Booklist_m3t1.txt","Booklist_m3t2.txt","Booklist_m3t3.txt"};
 string st[3] = {"11:00 - 13:00 | 14:30 - 16:30 | 18:30 - 20:30","11:30 - 13:30 | 15:00 - 17:00 | 19:00 - 21:00","12:00 - 14:00 | 15:30 - 17:30 | 19:30 - 21:30"};
 string booklist[4],book;
 string movie[3];
@@ -33,7 +33,7 @@ int ch_movie,ch_time,num,mt;
 
 int main()
 {
-	home();
+	bill(2);
 	return 0;
 }
 
@@ -186,9 +186,13 @@ void user(){
 	cin >> ch_time;
 	mt = pow(ch_movie,2)+ch_time;
 	cin.ignore();
+	show_seat(mt);
 	cout << "Choose seat : ";
 	getline(cin,book);
+	cout<<"here";
 	book_seat(book);
+	read_seat(mt);
+	bill(mt);
 }
 
 void book_seat(string bk)
@@ -212,29 +216,27 @@ void book_seat(string bk)
 void filebooklist(int mt)
 {
 	fstream source;
-	if(mt<8)
-	{
-		source.open(filelist[mt-2], ios::app);
-		for(int j=0;j<num;j++)
-			{
-				source << booklist[j] << "\n";
-			} 
-		source.close();
-		read_seat(mt);
+	switch(mt){
+		case 2 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m1t1.txt"); break;
+		case 3 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m1t2.txt"); break;
+		case 4 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m1t3.txt"); break;
+		case 5 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m2t1.txt"); break;
+		case 6 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m2t2.txt"); break;
+		case 7 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m2t3.txt"); break;
+		case 10 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m3t1.txt"); break;
+		case 11 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m3t2.txt"); break;
+		case 12 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m3t3.txt"); break;
 	}
-	else
+	
+	for(int j=0;j<num;j++)
 	{
-		source.open(filelist[mt-4], ios::app);
-		for(int j=0;j<num;j++)
-			{
-				source << booklist[j] << "\n";
-			} 
-		source.close();
-		read_seat(mt);
-	}
+		source << booklist[j] << "\n";
+	} 
+	source.close();
+	read_seat(mt);
 }
 
-void bill()
+void bill(int mt)
 {
 	string name;
 	cout << "Enter name : ";
@@ -243,34 +245,28 @@ void bill()
 	for(int i=0;i<num;i++)
 	cout << booklist[i] << " ";
 	fstream source;
-	if(mt<8)
-	{
-		source.open(filebill[mt-2], ios::app); 
-		source << "Name : " << name << "\n";
-		source << "Seat : ";
-		for(int j=0;j<num;j++)
-		{
-			source << booklist[j] << " ";
-		} 
-		source << "\n";
-		source.close();
-		cout << "The booking is successful.\n"; 
-		home();
+	
+	switch(mt){
+		case 2 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Bill_m1t1.txt"); break;
+		case 3 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Bill_m1t2.txt"); break;
+		case 4 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Bill_m1t3.txt"); break;
+		case 5 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Bill_m2t1.txt"); break;
+		case 6 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Bill_m2t2.txt"); break;
+		case 7 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Bill_m2t3.txt"); break;
+		case 10 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Bill_m3t1.txt"); break;
+		case 11 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Bill_m3t2.txt"); break;
+		case 12 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Bill_m3t3.txt"); break;
 	}
-	else
+	source << "Name : " << name << "\n";
+	source << "Seat : ";
+	for(int j=0;j<num;j++)
 	{
-		source.open(filebill[mt-4], ios::app); 
-		source << "Name : " << name << "\n";
-		source << "Seat : ";
-		for(int j=0;j<num;j++)
-		{
-			source << booklist[j] << " ";
-		} 
-		source << "\n";
-		source.close();
-		cout << "The booking is successful.\n";
-		home();
-	}
+		source << booklist[j] << " ";
+	} 
+	source << "\n";
+	source.close();
+	cout << "The booking is successful.\n";
+	home();
 }
 
 void read_seat(int mt){
@@ -282,46 +278,33 @@ void read_seat(int mt){
     int col[28] = {};
     int row[28] = {};
     // mt varible is important here
-    if(mt<8)
+
+	switch(mt){
+		case 2 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m1t1.txt"); break;
+		case 3 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m1t2.txt"); break;
+		case 4 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m1t3.txt"); break;
+		case 5 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m2t1.txt"); break;
+		case 6 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m2t2.txt"); break;
+		case 7 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m2t3.txt"); break;
+		case 10 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m3t1.txt"); break;
+		case 11 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m3t2.txt"); break;
+		case 12 : source.open("D:\\Desktop\\code\\project - movie\\compro\\Booklist_m3t3.txt"); break;
+	}
+	while(getline(source,textline))
 	{
-		source.open(filelist[mt-2]);
-    	// read the data and covert to row,col to book the seat
-    	while(getline(source,textline))
+        if(i%2 == 0) 
 		{
-        	if(i%2 == 0) 
-			{
-            	strcpy(char_row,textline.c_str());
-            	if(char_row[0] == 'E') row[i] = 0;
-            	if(char_row[0] == 'D') row[i] = 1;
-            	if(char_row[0] == 'C') row[i] = 2;
-            	if(char_row[0] == 'B') row[i] = 3;
-            	if(char_row[0] == 'A') row[i] = 4;
-        	}
+        	strcpy(char_row,textline.c_str());
+            if(char_row[0] == 'E') row[i] = 0;
+            if(char_row[0] == 'D') row[i] = 1;
+            if(char_row[0] == 'C') row[i] = 2;
+            if(char_row[0] == 'B') row[i] = 3;
+            if(char_row[0] == 'A') row[i] = 4;
+        }
         	else col[i-1] = stoi(textline);
         	i++;
-    	}
-    source.close();
-	}
-	else
-	{
-		source.open(filelist[mt-4]);
-    	// read the data and covert to row,col to book the seat
-    	while(getline(source,textline))
-		{
-        	if(i%2 == 0) 
-			{
-            	strcpy(char_row,textline.c_str());
-            	if(char_row[0] == 'E') row[i] = 0;
-            	if(char_row[0] == 'D') row[i] = 1;
-            	if(char_row[0] == 'C') row[i] = 2;
-            	if(char_row[0] == 'B') row[i] = 3;
-            	if(char_row[0] == 'A') row[i] = 4;
-        	}
-        	else col[i-1] = stoi(textline);
-        	i++;
-    	}
-    source.close();
-	}
+    }
+	source.close();
 
     // update data one by one
     int position;
@@ -332,7 +315,8 @@ void read_seat(int mt){
         update_seat(position);
     }
 
-    show_seat();
+    //show_seat(mt);
+
 }
 
 void update_seat(int position)
@@ -340,59 +324,54 @@ void update_seat(int position)
 	string textline;
     int new_seat[28];
     int i = 0;
+	ifstream source;
     // open seat file
-	if(mt<8)
+	
+
+	switch(mt){
+		case 2 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt"); break;
+		case 3 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t2.txt"); break;
+		case 4 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t3.txt"); break;
+		case 5 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m2t1.txt"); break;
+		case 6 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m2t2.txt"); break;
+		case 7 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m2t3.txt"); break;
+		case 10 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m3t1.txt"); break;
+		case 11 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m3t2.txt"); break;
+		case 12 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m3t3.txt"); break;
+	}
+	while(getline(source,textline))
 	{
-		ifstream source(fileseat[mt-2]);
-    // update the seat into new_seat
-    	while(getline(source,textline))
+        if(i == position)
 		{
-    	    if(i == position)
-			{
-       	    	new_seat[i] = 1;
-        	}
+            new_seat[i] = 1;
+        }
         else
 		{
             new_seat[i] = stoi(textline);
         }
         i++;
-		}
-    	source.close();
+    }
+    source.close();
 
-    // push all new data into the same file
-    	ofstream copy_source(fileseat[mt-2]);
-    	for(int j = 0; j<i; j++)
-		{
-    	    copy_source << new_seat[j] << endl;
-    	}
-    	copy_source.close();
+
+    ofstream copy_source;
+	switch(mt){
+		case 2 : copy_source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt"); break;
+		case 3 : copy_source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t2.txt"); break;
+		case 4 : copy_source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t3.txt"); break;
+		case 5 : copy_source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m2t1.txt"); break;
+		case 6 : copy_source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m2t2.txt"); break;
+		case 7 : copy_source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m2t3.txt"); break;
+		case 10 : copy_source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m3t1.txt"); break;
+		case 11 : copy_source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m3t2.txt"); break;
+		case 12 : copy_source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m3t3.txt"); break;
 	}
-	else
+    for(int j = 0; j<i; j++)
 	{
-		ifstream source(fileseat[mt-4]);
-    	// update the seat into new_seat
-    	while(getline(source,textline))
-		{
-        	if(i == position)
-			{
-            	new_seat[i] = 1;
-        	}
-        	else
-			{
-            	new_seat[i] = stoi(textline);
-        	}
-        	i++;
-    	}
-    	source.close();
+        copy_source << new_seat[j] << endl;
+    }
+    copy_source.close();
 
-    // push all new data into the same file
-    	ofstream copy_source(fileseat[mt-4]);
-    	for(int j = 0; j<i; j++)
-		{
-        	copy_source << new_seat[j] << endl;
-    	}
-    	copy_source.close();
-	}
 }
 
 /*void clear_seat(int mt){
@@ -404,35 +383,33 @@ void update_seat(int position)
     copy_source.close();
     ofstream Booklist("Booklist_m1t1.txt");
     Booklist.clear();
-    show_seat();
+    //show_seat();
 }*/
 
-void show_seat()
+void show_seat(int mt)
 {
 	string textline;
     int new_seat[28];
     int i = 0,n=1;
+	ifstream source;
     //open the seat data
-    if(mt<8)
-	{
-		ifstream source(fileseat[mt-2]);
-    	while(getline(source,textline))
-		{
-        	new_seat[i] = stoi(textline);
-        	i++;
-    	}
-    	source.close();
+
+	switch(mt){
+		case 2 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt"); break;
+		case 3 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t2.txt"); break;
+		case 4 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m1t3.txt"); break;
+		case 5 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m2t1.txt"); break;
+		case 6 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m2t2.txt"); break;
+		case 7 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m2t3.txt"); break;
+		case 10 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m3t1.txt"); break;
+		case 11 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m3t2.txt"); break;
+		case 12 : source.open("D:\\Desktop\\code\\project - movie\\compro\\seat_m3t3.txt"); break;
 	}
-	else
+	while(getline(source,textline))
 	{
-		ifstream source(fileseat[mt-4]);
-    	while(getline(source,textline))
-		{
-        	new_seat[i] = stoi(textline);
-        	i++;
-    	}
-    	source.close();
-	}
+        new_seat[i] = stoi(textline);
+        i++;
+    }
 
     char row[5] = {'E','D','C','B'};
     char display[2] = {'\0', 'X'};
@@ -471,5 +448,5 @@ void show_seat()
         }
         else cout<<"\t";
     }
-	bill();
+	bill(mt);
 }
