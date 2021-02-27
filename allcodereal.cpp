@@ -15,21 +15,24 @@ void admin();
 void op_admin();
 void user();
 void list(int);
-void book_seat(string);
-void filebooklist(int);
-void bill(int );
-void read_seat(int );
-void update_seat(int );
-void clear_seat(int );
-void show_seat(int );
+void filebooklist(char,int,int);
+void bill(int,char *,int *);
+void read_seat(int);
+void update_seat(int,int);
+//void clear_seat(int );
+void show_seat(int,int []);
 
 //string fileseat[9]={"\"D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt\"","seat_m1t2.txt","seat_m1t3.txt","seat_m2t1.txt","seat_m2t2.txt","seat_m2t3.txt","seat_m3t1.txt","seat_m3t2.txt","seat_m3t3.txt"};
 //string filebill[9]={"D:\\Desktop\\code\\project - movie\\compro\\Bill_m1t1.txt","Bill_m1t2.txt","Bill_m1t3.txt","Bill_m2t1.txt","Bill_m2t2.txt","Bill_m2t3.txt","Bill_m3t1.txt","Bill_m3t2.txt","Bill_m3t3.txt"};
 //string filelist[9]={"\"D:\\Desktop\\code\\project - movie\\compro\\Booklist_m1t1.txt\"","Booklist_m1t2.txt","Booklist_m1t3.txt","Booklist_m2t1.txt","Booklist_m2t2.txt","Booklist_m2t3.txt","Booklist_m3t1.txt","Booklist_m3t2.txt","Booklist_m3t3.txt"};
 string st[3] = {"11:00 - 13:00 | 14:30 - 16:30 | 18:30 - 20:30","11:30 - 13:30 | 15:00 - 17:00 | 19:00 - 21:00","12:00 - 14:00 | 15:30 - 17:30 | 19:30 - 21:30"};
-string booklist[4],book;
+string booklist[100],book;
 string movie[3];
-int ch_movie,ch_time,num,mt;
+string name;
+int new_seat[28];
+int seatnum[4];
+char row[4];
+int ch_movie,ch_time,numofseat,mt;
 
 int main()
 {
@@ -186,33 +189,29 @@ void user(){
 	cin >> ch_time;
 	mt = pow(ch_movie,2)+ch_time;
 	cin.ignore();
-	show_seat(mt);
-	cout << "\nChoose seat : ";
-	getline(cin,book);
-	cout<<"\nhere\n";
-	book_seat(book);
-	read_seat(mt);
-}
-
-void book_seat(string bk)
-{
-    int start = 0;
-    int end = bk.find_first_of(" ");
-	num = (bk.size()/3)+1;
-    while(end != -1)
+	show_seat(mt,new_seat);
+	cout << "Price\nRow B-E : 120\nRow A : 180\n";  
+    cout << "How many seat do you want? (MAx 4|Min 1) : ";
+    cin >> numofseat;
+    for(int i=0;i<numofseat;i++)
     {
-        for(int i=0;i<bk.size()/3;i++)
-        {
-            booklist[i] = bk.substr(start,end-start);
-            start = end+1;
-            end = bk.find_first_of(" ",start);
-        }
+        cout << "\nSeat " << i+1;
+        cout << "\nEnter row : ";
+        cin >> row[i];
+        cout << "Enter seat number : ";
+        cin >> seatnum[i];
+        filebooklist(row[i],seatnum[i],mt);
     }
-    booklist[num-1] = bk.substr(start,bk.size()-start);   
-	filebooklist(mt); 
+	cout<<"\nhere\n";
+	//read_seat(mt);
+	//show_seat(mt,new_seat);
+	cin.ignore();
+	cout << "\nEnter name : ";
+	getline(cin,name);
+	bill(mt,row,seatnum);
 }
 
-void filebooklist(int mt)
+void filebooklist(char row,int seatnum,int mt)
 {
 	fstream source;
 	switch(mt){
@@ -226,54 +225,16 @@ void filebooklist(int mt)
 		case 11 : source.open("Booklist_m3t2.txt", ios::app); break;
 		case 12 : source.open("Booklist_m3t3.txt", ios::app); break;
 	}
-	
-	for(int j=0;j<num;j++)
-	{
-		source << booklist[j] << "\n";
-	} 
+    source << row << "\n";
+    source << seatnum << "\n";
 	source.close();
-	read_seat(mt);
-	show_seat(mt);
-	bill(mt);
 }
 
-void bill(int mt)
-{
-	string name;
-	cout << "\nEnter name : ";
-	getline(cin,name);
-	cout << "Seat : ";
-	for(int i=0;i<num;i++)
-	cout << booklist[i] << " ";
-	fstream source;
-	
-	switch(mt){
-		case 2 : source.open("Bill_m1t1.txt", ios::app); break;
-		case 3 : source.open("Bill_m1t2.txt", ios::app); break;
-		case 4 : source.open("Bill_m1t3.txt", ios::app); break;
-		case 5 : source.open("Bill_m2t1.txt", ios::app); break;
-		case 6 : source.open("Bill_m2t2.txt", ios::app); break;
-		case 7 : source.open("Bill_m2t3.txt", ios::app); break;
-		case 10 : source.open("Bill_m3t1.txt", ios::app); break;
-		case 11 : source.open("Bill_m3t2.txt", ios::app); break;
-		case 12 : source.open("Bill_m3t3.txt", ios::app); break;
-	}
-	source << "\nName : " << name << "\n";
-	source << "Seat : ";
-	for(int j=0;j<num;j++)
-	{
-		source << booklist[j] << " ";
-	} 
-	source << "\n";
-	source.close();
-	cout << "\n\t**The booking is successful.**\n";
-	cout << "\n\t\t**Thank you**\n";
-	home();
-}
+
 
 void read_seat(int mt){
     //open Booklist file and read the data
-    fstream source;
+    ifstream source;
 	string textline;
     char char_row[2];
     int i = 0, N = 0;
@@ -297,7 +258,7 @@ void read_seat(int mt){
         if(i%2 == 0) 
 		{
         	strcpy(char_row,textline.c_str());
-            if(char_row[0] == 'E') row[i] = 0;
+            if(char_row[0] == 'E' or char_row[0] == 'e') row[i] = 0;
             if(char_row[0] == 'D') row[i] = 1;
             if(char_row[0] == 'C') row[i] = 2;
             if(char_row[0] == 'B') row[i] = 3;
@@ -307,29 +268,24 @@ void read_seat(int mt){
         	i++;
     }
 	source.close();
-
     // update data one by one
     int position;
     for(int j = 0; j<i; j+=2)
 	{
         //switch seat array from 2 dimension to 1 dimension
         position = row[j]*6-1+col[j];
-        update_seat(position);
+        update_seat(position,mt);
     }
-
     //show_seat(mt);
-
 }
 
-void update_seat(int position)
+void update_seat(int position,int mt)
 {
 	string textline;
-    int new_seat[28];
+    //int new_seat[28];
     int i = 0;
 	ifstream source;
     // open seat file
-	
-
 	switch(mt){
 		case 2 : source.open("seat_m1t1.txt"); break;
 		case 3 : source.open("seat_m1t2.txt"); break;
@@ -387,10 +343,10 @@ void update_seat(int position)
     //show_seat();
 }*/
 
-void show_seat(int mt)
+void show_seat(int mt,int new_seat[28])
 {
 	string textline;
-    int new_seat[28];
+    //int new_seat[28];
     int i = 0,n=1;
 	ifstream source;
     //open the seat data
@@ -449,4 +405,45 @@ void show_seat(int mt)
         }
         else cout<<"\t";
     }
+}
+
+void bill(int mt,char *r,int *sn)
+{
+	int cost=0;
+	cout << "Name : " << name;
+	cout << "\nSeat : ";
+	//cout << *r << r << &r;
+	for(int i=0;i<numofseat;i++)
+	{
+		cout << *(r+i) << *(sn+i) << " ";
+		if(*(r+i) == 'A' or *(r+i) == 'a')
+		{
+			cost+=180;
+		}
+		else cost+=120;
+	}
+	cout << "\nTotal ticket cost : " << cost;
+	fstream source;	
+	switch(mt){
+		case 2 : source.open("Bill_m1t1.txt", ios::app); break;
+		case 3 : source.open("Bill_m1t2.txt", ios::app); break;
+		case 4 : source.open("Bill_m1t3.txt", ios::app); break;
+		case 5 : source.open("Bill_m2t1.txt", ios::app); break;
+		case 6 : source.open("Bill_m2t2.txt", ios::app); break;
+		case 7 : source.open("Bill_m2t3.txt", ios::app); break;
+		case 10 : source.open("Bill_m3t1.txt", ios::app); break;
+		case 11 : source.open("Bill_m3t2.txt", ios::app); break;
+		case 12 : source.open("Bill_m3t3.txt", ios::app); break;
+	}
+	source << "\nName : " << name << "\n";
+	source << "Seat : ";
+	for(int i=0;i<numofseat;i++)
+	{
+		source << *(r+i) << *(sn+i) << " ";
+	}
+	source << "\n";
+	source.close();
+	cout << "\n\t**The booking is successful.**\n";
+	cout << "\n\t\t**Thank you**\n";
+	home();
 }
