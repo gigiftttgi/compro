@@ -185,14 +185,43 @@ void user(){
 	}
 	cout << "Choose movie (1-3) : ";
 	cin >> ch_movie;
+	while (ch_movie || ch_movie == 0){
+		if(ch_movie >=1 && ch_movie <= 3) break;
+		cout << "This movie does not exist. Please Select Again.\n";
+		cout << "\nChoose movie (1-3) : ";
+		cin >> ch_movie;
+		
+		
+	}
+
 	cout << "Choose Time (1-3) : ";
 	cin >> ch_time;
+	while (ch_time || ch_time==0){
+		if(ch_time >= 1 && ch_time <= 3) break;
+		cout << "This time does not exist. Please Select Again.\n";
+		cout << "\nChoose time (1-3) : ";
+		cin >> ch_time;
+		
+	}
+
 	mt = pow(ch_movie,2)+ch_time;
 	cin.ignore();
 	show_seat(mt,new_seat);
 	cout << "Price\nRow B-E : 120\nRow A : 180\n";  
     cout << "How many seat do you want? (MAx 4|Min 1) : ";
     cin >> numofseat;
+	while (numofseat || numofseat == 0){
+		if(numofseat>=1 && numofseat<=4) break;
+		if(numofseat > 4){
+			cout << "There are too many seats. Please Enter Again.";
+		}else{
+			cout << "Error. Please Enter number of seats you want";
+		}
+		cout << "\n\nHow many seat do you want? (MAx 4|Min 1) : ";
+    	cin >> numofseat;
+		
+	}
+
     for(int i=0;i<numofseat;i++)
     {
         cout << "\nSeat " << i+1;
@@ -202,6 +231,7 @@ void user(){
         cin >> seatnum[i];
         filebooklist(row[i],seatnum[i],mt);
     }
+
 	cout<<"\nhere\n";
 	//read_seat(mt);
 	//show_seat(mt,new_seat);
