@@ -556,6 +556,5 @@ void valiable_seat(int mt){
 
 		}
 	}
-    
-    
+    op_admin();    
 }
