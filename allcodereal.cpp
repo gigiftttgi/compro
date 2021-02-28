@@ -21,6 +21,7 @@ void read_seat(int);
 void update_seat(int,int);
 //void clear_seat(int );
 void show_seat(int,int []);
+void valiable_seat(int);
 
 //string fileseat[9]={"\"D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt\"","seat_m1t2.txt","seat_m1t3.txt","seat_m2t1.txt","seat_m2t2.txt","seat_m2t3.txt","seat_m3t1.txt","seat_m3t2.txt","seat_m3t3.txt"};
 //string filebill[9]={"D:\\Desktop\\code\\project - movie\\compro\\Bill_m1t1.txt","Bill_m1t2.txt","Bill_m1t3.txt","Bill_m2t1.txt","Bill_m2t2.txt","Bill_m2t3.txt","Bill_m3t1.txt","Bill_m3t2.txt","Bill_m3t3.txt"};
@@ -172,7 +173,30 @@ void list(int l){
 	}
 	else
 	{
-		cout << "Func check";
+		cout << "\n< Check Valiable Seat >\n";
+		cout << "Choose movie (1-3) : ";
+		cin >> ch_movie;
+		while (ch_movie || ch_movie == 0){
+			if(ch_movie >=1 && ch_movie <= 3) break;
+			cout << "This movie does not exist. Please Select Again.\n";
+			cout << "\nChoose movie (1-3) : ";
+			cin >> ch_movie;
+		}
+
+		cout << "Choose Time (1-3) : ";
+		cin >> ch_time;
+		while (ch_time || ch_time==0){
+			if(ch_time >= 1 && ch_time <= 3) break;
+			cout << "This time does not exist. Please Select Again.\n";
+			cout << "\nChoose time (1-3) : ";
+			cin >> ch_time;
+		
+		}
+
+	mt = pow(ch_movie,2)+ch_time;
+
+	valiable_seat(mt);
+
 	}
 }
 
@@ -440,9 +464,6 @@ void show_seat(int mt,int new_seat[28])
 void bill(int mt,char *r,int *sn)
 {
 	int cost=0;
-	//add
-	cout<< setw(25) << "-----------------------------------------\n";
-	cout << setw(27) << "***CPE THEATER***";
 	cout << "Name : " << name;
 	cout << "\nSeat : ";
 	//cout << *r << r << &r;
@@ -455,9 +476,6 @@ void bill(int mt,char *r,int *sn)
 		}
 		else cost+=120;
 	}
-	//add 
-	cout << "Movie : " << ch_movie;
-	cout << "Show time : " << ch_time;
 	cout << "\nTotal ticket cost : " << cost;
 	fstream source;	
 	switch(mt){
@@ -480,7 +498,64 @@ void bill(int mt,char *r,int *sn)
 	source << "\n";
 	source.close();
 	cout << "\n\t**The booking is successful.**\n";
-	cout << "\n\t\t\t**Thank you**\n";
-	cout<<setw(25)<<"-----------------------------------------\n";
+	cout << "\n\t\t**Thank you**\n";
 	home();
+}
+
+void valiable_seat(int mt){
+	string s[30];
+	string textline;
+    string seat[30] = {"A1", "A2", "A3", "A4","","","B1", "B2", "B3", "B4", "B5", "B6", "C1", "C2", "C3", "C4", "C5", "C6", "D1", "D2", "D3", "D4", "D5", "D6", "E1", "E2", "E3", "E4", "E5", "E6"};
+	int k = 0;
+	ifstream source;
+	switch(mt){
+		case 2 : source.open("Booklist_m1t1.txt"); break;
+		case 3 : source.open("Booklist_m1t2.txt"); break;
+		case 4 : source.open("Booklist_m1t3.txt"); break;
+		case 5 : source.open("Booklist_m2t1.txt"); break;
+		case 6 : source.open("Booklist_m2t2.txt"); break;
+		case 7 : source.open("Booklist_m2t3.txt"); break;
+		case 10 : source.open("Booklist_m3t1.txt"); break;
+		case 11 : source.open("Booklist_m3t2.txt"); break;
+		case 12 : source.open("Booklist_m3t3.txt"); break;
+	}
+
+	while(getline(source,textline)){
+		s[k] = textline;
+		k++;  
+    }
+	source.close();
+	int N= k/2;
+    string out[N];
+    int x=0;
+	int y=0;
+	
+    while(y < k){
+        out[x] = s[y] + s[y+1];
+       	y = y+2;
+       	x++;    	
+	}
+	
+    for(int i =0 ; i<30 ; i++){
+        for(int j=0 ; j<x ; j++){
+            if(out[j] == seat[i]){
+                seat[i] = "--";
+            }
+        }
+    }
+    
+ 	cout << "Valiable Seats";
+
+    for(int i=0; i<30 ; i++){
+		if(i%6 == 0){
+			cout << endl ;
+            cout << seat[i] << "  ";
+
+		}else{
+            cout << seat[i] << "  ";
+
+		}
+	}
+    
+    
 }
