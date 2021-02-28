@@ -387,9 +387,10 @@ void show_seat(int mt){
     for(int i = 0; i<23; i = i+6){
         cout<<row[n-1]<<"\t";
         for(int j = i; j<6+i; j++){
-            if(new_seat[j] == 0) cout<<"| | ";
-            if(new_seat[j] == 1) cout<<"|X| ";
-            else if(j == 2+i) cout<<"\t";
+        	if(j == 2+i && new_seat[j] == 1) cout<<"|X| \t";
+		if(j != 2+i && new_seat[j] == 1) cout<<"|X| ";
+		if(j == 2+i && new_seat[j] == 0) cout<<"| | \t";
+		if(j != 2+i && new_seat[j] == 0) cout<<"| | ";
 
         }
         cout<<"\n";
