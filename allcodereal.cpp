@@ -440,6 +440,9 @@ void show_seat(int mt,int new_seat[28])
 void bill(int mt,char *r,int *sn)
 {
 	int cost=0;
+	//add
+	cout<< setw(25) << "-----------------------------------------\n";
+	cout << setw(27) << "***CPE THEATER***";
 	cout << "Name : " << name;
 	cout << "\nSeat : ";
 	//cout << *r << r << &r;
@@ -452,6 +455,9 @@ void bill(int mt,char *r,int *sn)
 		}
 		else cost+=120;
 	}
+	//add 
+	cout << "Movie : " << ch_movie;
+	cout << "Show time : " << ch_time;
 	cout << "\nTotal ticket cost : " << cost;
 	fstream source;	
 	switch(mt){
@@ -474,6 +480,7 @@ void bill(int mt,char *r,int *sn)
 	source << "\n";
 	source.close();
 	cout << "\n\t**The booking is successful.**\n";
-	cout << "\n\t\t**Thank you**\n";
+	cout << "\n\t\t\t**Thank you**\n";
+	cout<<setw(25)<<"-----------------------------------------\n";
 	home();
 }
