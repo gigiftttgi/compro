@@ -17,10 +17,9 @@ void user();
 void list(int);
 void filebooklist(char,int,int);
 void bill(int,char *,int *);
-void read_seat(int);
+int read_seat(char , int);
 void update_seat(int,int);
-//void clear_seat(int );
-void show_seat(int,int []);
+void show_seat(int);
 void valiable_seat(int);
 
 //string fileseat[9]={"\"D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt\"","seat_m1t2.txt","seat_m1t3.txt","seat_m2t1.txt","seat_m2t2.txt","seat_m2t3.txt","seat_m3t1.txt","seat_m3t2.txt","seat_m3t3.txt"};
@@ -230,7 +229,7 @@ void user(){
 
 	mt = pow(ch_movie,2)+ch_time;
 	cin.ignore();
-	show_seat(mt,new_seat);
+	show_seat(mt);
 	cout << "Price\nRow B-E : 120\nRow A : 180\n";  
     cout << "How many seat do you want? (MAx 4|Min 1) : ";
     cin >> numofseat;
@@ -254,11 +253,10 @@ void user(){
         cout << "Enter seat number : ";
         cin >> seatnum[i];
         filebooklist(row[i],seatnum[i],mt);
+		update_seat(read_seat(row[i],seatnum[i]),mt);
     }
 
-	cout<<"\nhere\n";
-	//read_seat(mt);
-	//show_seat(mt,new_seat);
+	show_seat(mt);
 	cin.ignore();
 	cout << "\nEnter name : ";
 	getline(cin,name);
@@ -285,136 +283,92 @@ void filebooklist(char row,int seatnum,int mt)
 }
 
 
+int read_seat(char row, int col){
 
-void read_seat(int mt){
-    //open Booklist file and read the data
-    ifstream source;
-	string textline;
-    char char_row[2];
-    int i = 0, N = 0;
-    int col[28] = {};
-    int row[28] = {};
-    // mt varible is important here
+	int int_row;
 
-	switch(mt){
-		case 2 : source.open("Booklist_m1t1.txt"); break;
-		case 3 : source.open("Booklist_m1t2.txt"); break;
-		case 4 : source.open("Booklist_m1t3.txt"); break;
-		case 5 : source.open("Booklist_m2t1.txt"); break;
-		case 6 : source.open("Booklist_m2t2.txt"); break;
-		case 7 : source.open("Booklist_m2t3.txt"); break;
-		case 10 : source.open("Booklist_m3t1.txt"); break;
-		case 11 : source.open("Booklist_m3t2.txt"); break;
-		case 12 : source.open("Booklist_m3t3.txt"); break;
+	switch(row){
+		case('A') : int_row = 4; break;
+		case('B') : int_row = 3; break;
+		case('C') : int_row = 2; break;
+		case('D') : int_row = 1; break;
+		case('E') : int_row = 0; break;
 	}
-	while(getline(source,textline))
-	{
-        if(i%2 == 0) 
-		{
-        	strcpy(char_row,textline.c_str());
-            if(char_row[0] == 'E' or char_row[0] == 'e') row[i] = 0;
-            if(char_row[0] == 'D') row[i] = 1;
-            if(char_row[0] == 'C') row[i] = 2;
-            if(char_row[0] == 'B') row[i] = 3;
-            if(char_row[0] == 'A') row[i] = 4;
-        }
-        	else col[i-1] = stoi(textline);
-        	i++;
-    }
-	source.close();
-    // update data one by one
-    int position;
-    for(int j = 0; j<i; j+=2)
-	{
-        //switch seat array from 2 dimension to 1 dimension
-        position = row[j]*6-1+col[j];
-        update_seat(position,mt);
-    }
-    //show_seat(mt);
+	
+	int position = (int_row*6-1)+col;
+	return position;
+
 }
 
 void update_seat(int position,int mt)
 {
 	string textline;
-    //int new_seat[28];
-    int i = 0;
+    vector<int> new_seat(28);
 	ifstream source;
+	int i = 0;
+
     // open seat file
 	switch(mt){
 		case 2 : source.open("seat_m1t1.txt"); break;
-		case 3 : source.open("seat_m1t2.txt"); break;
-		case 4 : source.open("seat_m1t3.txt"); break;
-		case 5 : source.open("seat_m2t1.txt"); break;
-		case 6 : source.open("seat_m2t2.txt"); break;
-		case 7 : source.open("seat_m2t3.txt"); break;
-		case 10 : source.open("seat_m3t1.txt"); break;
-		case 11 : source.open("seat_m3t2.txt"); break;
-		case 12 : source.open("seat_m3t3.txt"); break;
+		case 3 : source.open("seat_m1t2.txt", ios::app); break;
+		case 4 : source.open("seat_m1t3.txt", ios::app); break;
+		case 5 : source.open("seat_m2t1.txt", ios::app); break;
+		case 6 : source.open("seat_m2t2.txt", ios::app); break;
+		case 7 : source.open("seat_m2t3.txt", ios::app); break;
+		case 10 : source.open("seat_m3t1.txt", ios::app); break;
+		case 11 : source.open("seat_m3t2.txt", ios::app); break;
+		case 12 : source.open("seat_m3t3.txt", ios::app); break;
 	}
+
 	while(getline(source,textline))
-	{
-        if(i == position)
-		{
-            new_seat[i] = 1;
-        }
-        else
-		{
-            new_seat[i] = stoi(textline);
-        }
-        i++;
+	{  
+		new_seat[i] = stoi(textline);
+		i++;
+    }
+
+	new_seat.at(position) = 1;
+	cout<<"\n";
+	
+	source.close();
+
+	ofstream new_source;
+	switch(mt){
+		case 2 : new_source.open("seat_m1t1.txt"); break;
+		case 3 : new_source.open("seat_m1t2.txt", ios::app); break;
+		case 4 : new_source.open("seat_m1t3.txt", ios::app); break;
+		case 5 : new_source.open("seat_m2t1.txt", ios::app); break;
+		case 6 : new_source.open("seat_m2t2.txt", ios::app); break;
+		case 7 : new_source.open("seat_m2t3.txt", ios::app); break;
+		case 10 : new_source.open("seat_m3t1.txt", ios::app); break;
+		case 11 : new_source.open("seat_m3t2.txt", ios::app); break;
+		case 12 : new_source.open("seat_m3t3.txt", ios::app); break;
+	}
+
+
+    for(int j = 0; j<i; j++){
+        new_source << new_seat[j] << endl;
     }
     source.close();
-
-
-    ofstream copy_source;
-	switch(mt){
-		case 2 : source.open("seat_m1t1.txt"); break;
-		case 3 : source.open("seat_m1t2.txt"); break;
-		case 4 : source.open("seat_m1t3.txt"); break;
-		case 5 : source.open("seat_m2t1.txt"); break;
-		case 6 : source.open("seat_m2t2.txt"); break;
-		case 7 : source.open("seat_m2t3.txt"); break;
-		case 10 : source.open("seat_m3t1.txt"); break;
-		case 11 : source.open("seat_m3t2.txt"); break;
-		case 12 : source.open("seat_m3t3.txt"); break;
-	}
-    for(int j = 0; j<28; j++)
-	{
-        copy_source << new_seat[j] << endl;
-    }
-    copy_source.close();
 }
 
-/*void clear_seat(int mt){
-    //this function for admin when they update the movie and seat need to be clear
-    ofstream copy_source("seat_m1t1.txt");
-    for(int j = 0; j<28; j++){
-        copy_source << "0" << endl;
-    }
-    copy_source.close();
-    ofstream Booklist("Booklist_m1t1.txt");
-    Booklist.clear();
-    //show_seat();
-}*/
+void show_seat(int mt){
 
-void show_seat(int mt,int new_seat[28])
-{
 	string textline;
-    //int new_seat[28];
+    int new_seat[28];
     int i = 0,n=1;
 	ifstream source;
     //open the seat data
 
 	switch(mt){
-		case 2 : source.open("seat_m1t1.txt"); break;
-		case 3 : source.open("seat_m1t2.txt"); break;
-		case 4 : source.open("seat_m1t3.txt"); break;
-		case 5 : source.open("seat_m2t1.txt"); break;
-		case 6 : source.open("seat_m2t2.txt"); break;
-		case 7 : source.open("seat_m2t3.txt"); break;
-		case 10 : source.open("seat_m3t1.txt"); break;
-		case 11 : source.open("seat_m3t2.txt"); break;
-		case 12 : source.open("seat_m3t3.txt"); break;
+		case 2 : source.open("seat_m1t1.txt", ios::app); break;
+		case 3 : source.open("seat_m1t2.txt", ios::app); break;
+		case 4 : source.open("seat_m1t3.txt", ios::app); break;
+		case 5 : source.open("seat_m2t1.txt", ios::app); break;
+		case 6 : source.open("seat_m2t2.txt", ios::app); break;
+		case 7 : source.open("seat_m2t3.txt", ios::app); break;
+		case 10 : source.open("seat_m3t1.txt", ios::app); break;
+		case 11 : source.open("seat_m3t2.txt", ios::app); break;
+		case 12 : source.open("seat_m3t3.txt", ios::app); break;
 	}
 	while(getline(source,textline))
 	{
