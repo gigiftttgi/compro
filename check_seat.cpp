@@ -80,6 +80,6 @@ void valiable_seat(int mt){
 	}else{
 		cout << "seat";
 	}
-    
+    op_admin();
     
 }
