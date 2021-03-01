@@ -540,7 +540,7 @@ void valiable_seat(int mt){
 		cout << "seat";
 	}
 	
-	op_admin()
+	op_admin();
     
     
 }
