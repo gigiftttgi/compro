@@ -22,6 +22,9 @@ void update_seat(int,int);
 void show_seat(int);
 void valiable_seat(int);
 int cost(char *,string);
+void member(bool &ck_member,string &);
+void checkmem(string,bool &,string &);
+string rand_id();
 
 //string fileseat[9]={"\"D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt\"","seat_m1t2.txt","seat_m1t3.txt","seat_m2t1.txt","seat_m2t2.txt","seat_m2t3.txt","seat_m3t1.txt","seat_m3t2.txt","seat_m3t3.txt"};
 //string filebill[9]={"D:\\Desktop\\code\\project - movie\\compro\\Bill_m1t1.txt","Bill_m1t2.txt","Bill_m1t3.txt","Bill_m2t1.txt","Bill_m2t2.txt","Bill_m2t3.txt","Bill_m3t1.txt","Bill_m3t2.txt","Bill_m3t3.txt"};
@@ -30,10 +33,12 @@ string st[3] = {"11:00 - 13:00 | 14:30 - 16:30 | 18:30 - 20:30","11:30 - 13:30 |
 string booklist[100],book;
 string movie[3];
 string name;
+string name_mem;
 int new_seat[28];
 int seatnum[4];
 char row[4];
 int ch_movie,ch_time,numofseat,mt;
+bool ck_member = false;
 
 int main()
 {
@@ -52,7 +57,34 @@ void home(){
 		cout << "Select option :  ";
 		cin >> op;
 		switch(op){
-			case 1 : user();
+			case 1 : char key;
+					 cout << "\nAre you a member? (y/n) : ";
+					 cin >> key;
+					 if(key == 'y' or key == 'Y')
+					 {
+						 string ch_id;
+						 cout << "Enter member id : ";
+						 cin >> ch_id;
+						 checkmem(ch_id,ck_member,name_mem);
+						 cout << "\n**Welcom K." << name_mem << " **";
+						 user();
+					 }
+					 else
+					 {
+						 char key;
+						 cout << "\nWould you like to become a member? (y/n) : ";
+						 cin >> key;
+						 if(key == 'y' or key == 'Y')
+					 	 {
+							 member(ck_member,name_mem);
+							 cout << "\n**Welcom K." << name_mem << " **";
+							 user();
+					 	 }
+						 else
+						 {
+							user();
+						 }
+					 }
 					 c_op = true;
 					 break;
 			case 2 : admin();
@@ -211,31 +243,31 @@ void valiable_seat(int mt){
 	int k = 0;
 	ifstream source;
 	switch(mt){
-        case 2 : cout << "Movie : 1\n";
-				cout << "Time : 1 | 11:00 - 13:00 |\n"; 
+        case 2 : cout << "Theater 1 :" << movie[1];
+				cout << "\nTime : 1 | 11:00 - 13:00 |\n"; 
 				source.open("Booklist_m1t1.txt"); break;
-		case 3 : cout << "Movie : 1\n";
-				cout << "Time : 2 | 14:30 - 16:30 |\n"; 
+		case 3 : cout << "Theater 1 :" << movie[1];
+				cout << "\nTime : 2 | 14:30 - 16:30 |\n"; 
 				source.open("Booklist_m1t2.txt"); break;
-		case 4 : cout << "Movie : 1\n";
-				cout << "Time : 3 | 18:30 - 20:30 |\n"; 
+		case 4 : cout << "Theater 1 :" << movie[1];
+				cout << "\nTime : 3 | 18:30 - 20:30 |\n"; 
 				source.open("Booklist_m1t3.txt"); break;
-		case 5 : cout << "Movie : 2\n";
+		case 5 : cout << "Theater 2 : " << movie[2];
 				cout << "Time : 1 | 11:30 - 13:30 |\n"; 
 				source.open("Booklist_m2t1.txt"); break;
-		case 6 : cout << "Movie : 2\n";
+		case 6 : cout << "Theater 2 : " << movie[2];
 				cout << "Time : 2 | 15:00 - 17:00 |\n"; 
 				source.open("Booklist_m2t2.txt"); break;
-		case 7 : cout << "Movie : 2\n";
+		case 7 : cout << "Theater 2 : " << movie[2];
 				cout << "Time : 3 | 19:00 - 21:00 |\n"; 
 				source.open("Booklist_m2t3.txt"); break;
-		case 10 : cout << "Movie : 3\n";
+		case 10 : cout << "Theater 3 : " << movie[3];
 				cout << "Time : 1 | 12:00 - 14:00 |\n"; 
 				source.open("Booklist_m3t1.txt"); break;
-		case 11 : cout << "Movie : 3\n";
+		case 11 : cout << "Theater 3 : " << movie[3];
 				cout << "Time : 2 | 15:30 - 17:30 |\n"; 
 				source.open("Booklist_m3t2.txt"); break;
-		case 12 : cout << "Movie : 3\n";
+		case 12 : cout << "Theater 3 : " << movie[3];
 				cout << "Time : 3 | 19:30 - 21:30 |\n"; 
 				source.open("Booklist_m3t3.txt"); break;
 	}
@@ -281,8 +313,94 @@ void valiable_seat(int mt){
 	op_admin();   
 }
 
+void member(bool &ck_member,string &name_mem)
+{
+    string mem_id;
+    int id[5];
+	cin.ignore();
+    cout << "Enter name : ";
+    getline(cin,name_mem);
+    cout << "suscess\n";
+	mem_id = rand_id();
+    cout << "your member id is " << mem_id;
+    fstream source;
+    source.open("member.txt" ,ios::app);
+    source << mem_id;
+    source << " " << name_mem << "\n";
+    source.close();
+	ck_member = true;
+}
 
-void user(){
+string rand_id()
+{
+    int id[5];
+    string text,memid;
+    string realid;
+    bool use = false;
+    do
+    {
+        //string realid;
+        use = false;
+        realid.clear();
+        srand(time(0));
+        for(int i=0;i<5;i++)
+        {
+    	    id[i] = rand()%10;
+        }
+        for (int i:id) 
+        {
+		    realid.push_back(i + '0');
+	    }
+        //cout << realid << " ";
+        ifstream source;
+        source.open("member.txt");
+        while(getline(source,text))
+        {
+        int start=0;
+        int end = text.find_first_of(" ");
+        while( end != -1)
+        {
+            if(text.substr(start,end-start)==realid)
+            {
+                use = true;
+                //realid.clear();
+            }
+            start = end+1;
+            end = text.find_first_of(" ",start);
+        }
+    }
+    source.close();
+    //memid = realid;
+    }while(use==true);
+    return realid;
+    
+}
+
+void checkmem(string key,bool &ck_member,string &name_mem)
+{
+    string text;
+    ifstream source;
+    source.open("member.txt");
+    while(getline(source,text))
+    {
+        int start=0;
+        int end = text.find_first_of(" ");
+        while( end != -1)
+        {
+            if(text.substr(start,end-start)==key)
+            {
+                ck_member = true;
+                name_mem = text.substr(end+1,text.size()-end+1);
+            }
+            start = end+1;
+            end = text.find_first_of(" ",start);
+        }
+    }
+    source.close();
+}
+
+void user()
+{
 	cout << "\n\t***Cinema Show time***\n";
 	for(int i=0;i<3;i++)
 	{
@@ -393,14 +511,14 @@ void update_seat(int position,int mt)
     // open seat file
 	switch(mt){
 		case 2 : source.open("seat_m1t1.txt"); break;
-		case 3 : source.open("seat_m1t2.txt", ios::app); break;
-		case 4 : source.open("seat_m1t3.txt", ios::app); break;
-		case 5 : source.open("seat_m2t1.txt", ios::app); break;
-		case 6 : source.open("seat_m2t2.txt", ios::app); break;
-		case 7 : source.open("seat_m2t3.txt", ios::app); break;
-		case 10 : source.open("seat_m3t1.txt", ios::app); break;
-		case 11 : source.open("seat_m3t2.txt", ios::app); break;
-		case 12 : source.open("seat_m3t3.txt", ios::app); break;
+		case 3 : source.open("seat_m1t2.txt"); break;
+		case 4 : source.open("seat_m1t3.txt"); break;
+		case 5 : source.open("seat_m2t1.txt"); break;
+		case 6 : source.open("seat_m2t2.txt"); break;
+		case 7 : source.open("seat_m2t3.txt"); break;
+		case 10 : source.open("seat_m3t1.txt"); break;
+		case 11 : source.open("seat_m3t2.txt"); break;
+		case 12 : source.open("seat_m3t3.txt"); break;
 	}
 
 	while(getline(source,textline))
@@ -417,14 +535,14 @@ void update_seat(int position,int mt)
 	ofstream new_source;
 	switch(mt){
 		case 2 : new_source.open("seat_m1t1.txt"); break;
-		case 3 : new_source.open("seat_m1t2.txt", ios::app); break;
-		case 4 : new_source.open("seat_m1t3.txt", ios::app); break;
-		case 5 : new_source.open("seat_m2t1.txt", ios::app); break;
-		case 6 : new_source.open("seat_m2t2.txt", ios::app); break;
-		case 7 : new_source.open("seat_m2t3.txt", ios::app); break;
-		case 10 : new_source.open("seat_m3t1.txt", ios::app); break;
-		case 11 : new_source.open("seat_m3t2.txt", ios::app); break;
-		case 12 : new_source.open("seat_m3t3.txt", ios::app); break;
+		case 3 : new_source.open("seat_m1t2.txt"); break;
+		case 4 : new_source.open("seat_m1t3.txt"); break;
+		case 5 : new_source.open("seat_m2t1.txt"); break;
+		case 6 : new_source.open("seat_m2t2.txt"); break;
+		case 7 : new_source.open("seat_m2t3.txt"); break;
+		case 10 : new_source.open("seat_m3t1.txt"); break;
+		case 11 : new_source.open("seat_m3t2.txt"); break;
+		case 12 : new_source.open("seat_m3t3.txt"); break;
 	}
 
 
@@ -470,10 +588,10 @@ void show_seat(int mt){
     for(int i = 0; i<23; i = i+6){
         cout<<row[n-1]<<"\t";
         for(int j = i; j<6+i; j++){
-        	if(j == 2+i && new_seat[j] == 1) cout<<"|X| \t";
-		if(j != 2+i && new_seat[j] == 1) cout<<"|X| ";
-		if(j == 2+i && new_seat[j] == 0) cout<<"| | \t";
-		if(j != 2+i && new_seat[j] == 0) cout<<"| | ";
+            if(j == 2+i && new_seat[j] == 1) cout<<"|X| \t";
+			if(j != 2+i && new_seat[j] == 1) cout<<"|X| ";
+			if(j == 2+i && new_seat[j] == 0) cout<<"| | \t";
+			if(j != 2+i && new_seat[j] == 0) cout<<"| | ";
 
         }
         cout<<"\n";
