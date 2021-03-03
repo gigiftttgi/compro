@@ -44,9 +44,12 @@ int main()
 	return 0;
 }
 
-void home(){
+void home()
+{
 	int op;
 	bool c_op = false;
+	bool be_mem = false;
+	bool a_member = false;
 	do{
 		cout << "\n\t***Welcome to Theater***\n";
 		cout << "1. for User\n";
@@ -54,35 +57,55 @@ void home(){
 		cout << "0. for Exit\n";
 		cout << "Select option :  ";
 		cin >> op;
-		switch(op){
+		switch(op)
+		{
 			case 1 : char key;
-					 cout << "\nAre you a member? (y/n) : ";
-					 cin >> key;
-					 if(key == 'y' or key == 'Y')
+					 do
 					 {
-						 string ch_id;
-						 cout << "Enter member id : ";
-						 cin >> ch_id;
-						 checkmem(ch_id,ck_member,name_mem);
-						 cout << "\n**Welcom K." << name_mem << " **";
-						 user();
-					 }
-					 else
-					 {
-						 char key;
-						 cout << "\nWould you like to become a member? (y/n) : ";
-						 cin >> key;
-						 if(key == 'y' or key == 'Y')
+						 cout << "\nAre you a member? (Y/N) : ";
+					 	 cin >> key;
+					 	 if(key == 'y' or key == 'Y')
 					 	 {
-							 member(ck_member,name_mem);
-							 cout << "\n**Welcom K." << name_mem << " **";
-							 user();
+						 	 string ch_id;
+						 	 cout << "Enter member id : ";
+						 	 cin >> ch_id;
+						 	 checkmem(ch_id,ck_member,name_mem);
+						 	 cout << "\n**Welcom K." << name_mem << " **";
+						 	 user();
+							 a_member = true;
+					 	 }
+					 	 else if(key == 'N' or key == 'n')
+					 	 {
+						  	 char key;
+							 do
+							 {
+								 cout << "\nWould you like to become a member? (Y/N) : ";
+						 	 	 cin >> key;
+						 	 	 if(key == 'y' or key == 'Y')
+					 	 	 	 {
+							  	 	 member(ck_member,name_mem);
+							 	 	 cout << "\n**Welcom K." << name_mem << " **";
+							 	 	 user();
+									 be_mem=true;
+					 	 	 	 }
+						 	 	 else if(key == 'N' or key == 'n')
+						 	     {
+							 	 	 user();
+									 be_mem=true;
+						 	 	 }
+							 	 else 
+								 {
+									 cout << "Please enter y/n\n";
+								 }
+							 }while(be_mem==false);
+							 a_member = true;
 					 	 }
 						 else
 						 {
-							user();
+							cout << "Please enter y/n\n";
+
 						 }
-					 }
+					 }while(a_member == false);
 					 c_op = true;
 					 break;
 			case 2 : admin();
@@ -92,7 +115,7 @@ void home(){
 					 break;
 			default : cout << "\nPlease select again\n\n";
 					  break;
-	}
+		}
 	}while(c_op == false);
 }
 
@@ -703,4 +726,3 @@ void bill(int mt,char *r,int *sn)
 	cout << "\n\t\t**Thank you**\n";
 	home();
 }
-
