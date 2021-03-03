@@ -24,11 +24,9 @@ void valiable_seat(int);
 int cost(char *,string);
 void member(bool &ck_member,string &);
 void checkmem(string,bool &,string &);
+bool check_seat(int , int );
 string rand_id();
 
-//string fileseat[9]={"\"D:\\Desktop\\code\\project - movie\\compro\\seat_m1t1.txt\"","seat_m1t2.txt","seat_m1t3.txt","seat_m2t1.txt","seat_m2t2.txt","seat_m2t3.txt","seat_m3t1.txt","seat_m3t2.txt","seat_m3t3.txt"};
-//string filebill[9]={"D:\\Desktop\\code\\project - movie\\compro\\Bill_m1t1.txt","Bill_m1t2.txt","Bill_m1t3.txt","Bill_m2t1.txt","Bill_m2t2.txt","Bill_m2t3.txt","Bill_m3t1.txt","Bill_m3t2.txt","Bill_m3t3.txt"};
-//string filelist[9]={"\"D:\\Desktop\\code\\project - movie\\compro\\Booklist_m1t1.txt\"","Booklist_m1t2.txt","Booklist_m1t3.txt","Booklist_m2t1.txt","Booklist_m2t2.txt","Booklist_m2t3.txt","Booklist_m3t1.txt","Booklist_m3t2.txt","Booklist_m3t3.txt"};
 string st[3] = {"11:00 - 13:00 | 14:30 - 16:30 | 18:30 - 20:30","11:30 - 13:30 | 15:00 - 17:00 | 19:00 - 21:00","12:00 - 14:00 | 15:30 - 17:30 | 19:30 - 21:30"};
 string booklist[100],book;
 string movie[3];
@@ -454,7 +452,18 @@ void user()
         cout << "Enter seat number : ";
         cin >> seatnum[i];
         filebooklist(row[i],seatnum[i],mt);
-		update_seat(read_seat(row[i],seatnum[i]),mt);
+
+		int position = read_seat(row[i],seatnum[i]);
+		bool checkseat = check_seat(mt,position);
+
+		while(checkseat == false){
+			cout<<"Error. This seat has been booked.\n";
+			cout<<"Please try again";
+			user();
+		}
+		
+		update_seat(position,mt);
+		
     }
 
 	show_seat(mt);
@@ -498,6 +507,43 @@ int read_seat(char row, int col){
 	
 	int position = (int_row*6-1)+col;
 	return position;
+
+}
+
+bool check_seat(int mt, int position){
+
+	string textline;
+    vector<int> new_seat(28);
+	ifstream source;
+	int i = 0;
+
+    // open seat file
+	switch(mt){
+		case 2 : source.open("seat_m1t1.txt"); break;
+		case 3 : source.open("seat_m1t2.txt"); break;
+		case 4 : source.open("seat_m1t3.txt"); break;
+		case 5 : source.open("seat_m2t1.txt"); break;
+		case 6 : source.open("seat_m2t2.txt"); break;
+		case 7 : source.open("seat_m2t3.txt"); break;
+		case 10 : source.open("seat_m3t1.txt"); break;
+		case 11 : source.open("seat_m3t2.txt"); break;
+		case 12 : source.open("seat_m3t3.txt"); break;
+	}
+
+	while(getline(source,textline))
+	{  
+		new_seat[i] = stoi(textline);
+		i++;
+    }
+	source.close();
+
+	cout<<"\n";
+	
+	for(int i = 0; i<new_seat.size(); i++){
+		if(new_seat[i] == 1 && i == position) return false;
+	}
+
+	return true;
 
 }
 
