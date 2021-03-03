@@ -25,6 +25,7 @@ int cost(char *,string);
 void member(bool &ck_member,string &);
 void checkmem(string,bool &,string &);
 bool check_seat(int , int );
+bool cancel_reserve(int, int);
 string rand_id();
 
 string st[3] = {"11:00 - 13:00 | 14:30 - 16:30 | 18:30 - 20:30","11:30 - 13:30 | 15:00 - 17:00 | 19:00 - 21:00","12:00 - 14:00 | 15:30 - 17:30 | 19:30 - 21:30"};
@@ -225,13 +226,125 @@ void list(int l){
 			cout << "\nChoose time (1-3) : ";
 			cin >> ch_time;		
 		}
-	mt = pow(ch_movie,2)+ch_time;
-	valiable_seat(mt);
+		mt = pow(ch_movie,2)+ch_time;
+		valiable_seat(mt);
+	}
+	else if(l==5){
+		int ch_movie,ch_time,seatnum;
+		char row;
+		cout << "\n< Cancel Reservation >\n";
+		for(int i=0;i<3;i++)
+		{
+			cout << "Theater " << i+1 << " : " << movie[i] << "\n";
+			cout << "Time   " << st[i] << "\n";
+		}
+		cout << "Choose movie (1-3) : ";
+		cin >> ch_movie;
+		while (ch_movie || ch_movie == 0){
+			if(ch_movie >=1 && ch_movie <= 3) break;
+			cout << "This movie does not exist. Please Select Again.\n";
+			cout << "\nChoose movie (1-3) : ";
+			cin >> ch_movie;
+		}
+
+		cout << "Choose Time (1-3) : ";
+		cin >> ch_time;
+		while (ch_time || ch_time==0){
+			if(ch_time >= 1 && ch_time <= 3) break;
+			cout << "This time does not exist. Please Select Again.\n";
+			cout << "\nChoose time (1-3) : ";
+			cin >> ch_time;	
+		}
+
+		int mt = pow(ch_movie,2)+ch_time;
+
+        cout << "\nEnter row : ";
+        cin >> row;
+        cout << "Enter seat number : ";
+        cin >> seatnum;
+    	
+		int position = read_seat(row,seatnum);	
+
+		bool cancel = cancel_reserve(mt,position);
+	
+
+		if(cancel == false){
+			cout<<"Cancel Reservation Error.\n The seat is still empty.";
+			list(5);
+		}
+		else cout<<"Cancel Reservation Completed.\n";
+		
 	}
 	else
 	{
 		cout << "function cancel";
 	}
+}
+
+bool cancel_reserve(int mt, int position){
+	
+	string textline;
+    vector<int> new_seat(28);
+	ifstream source;
+	int i = 0;
+
+    // open seat file
+	switch(mt){
+		case 2 : source.open("seat_m1t1.txt"); break;
+		case 3 : source.open("seat_m1t2.txt"); break;
+		case 4 : source.open("seat_m1t3.txt"); break;
+		case 5 : source.open("seat_m2t1.txt"); break;
+		case 6 : source.open("seat_m2t2.txt"); break;
+		case 7 : source.open("seat_m2t3.txt"); break;
+		case 10 : source.open("seat_m3t1.txt"); break;
+		case 11 : source.open("seat_m3t2.txt"); break;
+		case 12 : source.open("seat_m3t3.txt"); break;
+	}
+
+	while(getline(source,textline)){  
+		new_seat[i] = stoi(textline);
+		i++;
+    }
+	source.close();
+
+	bool update = true;
+
+	for(int i = 0; i<28; i++){
+		if(new_seat[i] == 0 && i == position){
+			update = false;
+			break;
+		}
+		else if(new_seat[i] == 1 && i == position){
+			new_seat.at(position) = 0;
+			update = true;
+		}
+		else new_seat[i] = new_seat[i];
+	}
+
+
+
+	if(update){
+		ofstream new_source;
+		switch(mt){
+			case 2 : new_source.open("seat_m1t1.txt"); break;
+			case 3 : new_source.open("seat_m1t2.txt"); break;
+			case 4 : new_source.open("seat_m1t3.txt"); break;
+			case 5 : new_source.open("seat_m2t1.txt"); break;
+			case 6 : new_source.open("seat_m2t2.txt"); break;
+			case 7 : new_source.open("seat_m2t3.txt"); break;
+			case 10 : new_source.open("seat_m3t1.txt"); break;
+			case 11 : new_source.open("seat_m3t2.txt"); break;
+			case 12 : new_source.open("seat_m3t3.txt"); break;
+		}
+
+		for(int j = 0; j<i; j++){
+			new_source << new_seat[j] << endl;
+		}
+		source.close();
+	}
+	
+	return update;
+	
 }
 
 void valiable_seat(int mt){
