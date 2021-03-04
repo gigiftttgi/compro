@@ -26,6 +26,9 @@ void member(bool &ck_member,string &);
 void checkmem(string,bool &,string &);
 bool check_seat(int , int );
 bool cancel_reserve(int, int);
+
+void ppl_seat(int);
+
 string rand_id();
 
 string st[3] = {"11:00 - 13:00 | 14:30 - 16:30 | 18:30 - 20:30","11:30 - 13:30 | 15:00 - 17:00 | 19:00 - 21:00","12:00 - 14:00 | 15:30 - 17:30 | 19:30 - 21:30"};
@@ -444,11 +447,80 @@ void valiable_seat(int mt){
 	}else{
 		cout << "seat\n";
 	}
-	op_admin();   
+
+	int opt;
+	cout << "\nDo you want to check who belong to seat? (1.Yes | 2.No)\n";
+	cout << "Enter option : ";
+	cin >> opt;
+	if(opt == 1){
+		ppl_seat(mt);
+	}else{ 
+		op_admin();
+	}   
+
 }
 
-void member(bool &ck_member,string &name_mem)
-{
+void ppl_seat(int mt){
+	ifstream source;
+	string s;
+	string textline;
+	vector<string> names;
+    vector<string> seat;
+
+	switch(mt){
+		case 2 : source.open("Bill_m1t1.txt"); break;
+		case 3 : source.open("Bill_m1t2.txt"); break;
+		case 4 : source.open("Bill_m1t3.txt"); break;
+		case 5 : source.open("Bill_m2t1.txt"); break;
+		case 6 : source.open("Bill_m2t2.txt"); break;
+		case 7 : source.open("Bill_m2t3.txt"); break;
+		case 10 : source.open("Bill_m3t1.txt"); break;
+		case 11 : source.open("Bill_m3t2.txt"); break;
+		case 12 : source.open("Bill_m3t3.txt"); break;
+	}
+
+	int N=0;
+	while(getline(source,textline)){
+		if(N%3==0 || N==0){
+
+		}else if((N+2)%3==0 ){
+			textline.erase(0,7);
+			names.push_back(textline);
+			
+		}else{
+			textline.erase(0,7);
+			seat.push_back(textline);
+		}
+
+		N++;
+    }
+
+	source.close();
+	
+	int opt = 1;
+	while(opt==1){
+		cout << "\nPlease input seat you want: ";
+		cin >> s;
+		int found;
+		int status = 0;
+		for(unsigned int i = 0 ; i < seat.size() ; i++){
+			found = seat[i].find(s);
+        	if(found != -1){
+				status = 1;
+       			cout << s << " belongs to '" << names[i] << "'" << endl; break;
+        	}
+		}
+		if(status==0) cout << "This seat hasn't bought yet.\n";
+		cout << "\nDo you want to check it again? (1.Yes | 2.No)\n";
+		cout << "Enter option : ";
+		cin >> opt;
+	}
+	op_admin();
+}
+
+
+
+void member(bool &ck_member,string &name_mem){
     string mem_id;
     int id[5];
 	cin.ignore();
