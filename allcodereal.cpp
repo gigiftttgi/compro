@@ -16,25 +16,23 @@ void op_admin();
 void user();
 void list(int);
 void filebooklist(char,int,int);
-void bill(int,char *,int *);
-int read_seat(char , int);
+//void bill(int,char *,int *);
 void update_seat(int,int);
 void show_seat(int);
 void valiable_seat(int);
-int cost(char *,string);
 void member(bool &ck_member,string &);
 void checkmem(string,bool &,string &);
+void ppl_seat(int);
+void promotion();
+void cost_ticket(int,char *,int *);
+int read_seat(char , int);
 bool check_seat(int , int );
 bool cancel_reserve(int, int);
-
-void ppl_seat(int);
 
 string rand_id();
 
 //add
 string discount;
-int cost = 0;
-
 string st[3] = {"11:00 - 13:00 | 14:30 - 16:30 | 18:30 - 20:30","11:30 - 13:30 | 15:00 - 17:00 | 19:00 - 21:00","12:00 - 14:00 | 15:30 - 17:30 | 19:30 - 21:30"};
 string booklist[100],book;
 string movie[3];
@@ -45,6 +43,7 @@ int seatnum[4];
 char row[4];
 int ch_movie,ch_time,numofseat,mt;
 bool ck_member = false;
+int cost = 0;
 
 int main()
 {
@@ -195,6 +194,7 @@ void op_admin()
 		//add
 			case 6 : list(6);
 					 c_aop = true;
+					 break;
 			default : cout << "Please enter again.\n";
 					  break;
 		}
@@ -629,25 +629,23 @@ void user()
 	}
 	cout << "Choose movie (1-3) : ";
 	cin >> ch_movie;
-	while (ch_movie || ch_movie == 0){
+	while (ch_movie || ch_movie == 0)
+	{
 		if(ch_movie >=1 && ch_movie <= 3) break;
 		cout << "This movie does not exist. Please Select Again.\n";
 		cout << "\nChoose movie (1-3) : ";
-		cin >> ch_movie;
-		
-		
+		cin >> ch_movie;		
 	}
 
 	cout << "Choose Time (1-3) : ";
 	cin >> ch_time;
-	while (ch_time || ch_time==0){
+	while (ch_time || ch_time==0)
+	{
 		if(ch_time >= 1 && ch_time <= 3) break;
 		cout << "This time does not exist. Please Select Again.\n";
 		cout << "\nChoose time (1-3) : ";
-		cin >> ch_time;
-		
+		cin >> ch_time;		
 	}
-
 	mt = pow(ch_movie,2)+ch_time;
 	cin.ignore();
 	show_seat(mt);
@@ -662,8 +660,7 @@ void user()
 			cout << "Error. Please Enter number of seats you want";
 		}
 		cout << "\n\nHow many seat do you want? (MAx 4|Min 1) : ";
-    	cin >> numofseat;
-		
+    	cin >> numofseat;		
 	}
 
     for(int i=0;i<numofseat;i++)
@@ -683,17 +680,13 @@ void user()
 			cout<<"Please try again";
 			user();
 		}
-		
-		update_seat(position,mt);
-		
+		update_seat(position,mt);	
     }
-
 	show_seat(mt);
 	cin.ignore();
 	cout << "\nEnter name : ";
 	getline(cin,name);
-	cost();
-	bill(mt,row,seatnum);
+	cost_ticket(mt,row,seatnum);
 }
 
 void filebooklist(char row,int seatnum,int mt)
@@ -716,10 +709,9 @@ void filebooklist(char row,int seatnum,int mt)
 }
 
 
-int read_seat(char row, int col){
-
+int read_seat(char row, int col)
+{
 	int int_row;
-
 	switch(row){
 		case('A') : int_row = 4; break;
 		case('B') : int_row = 3; break;
@@ -733,8 +725,8 @@ int read_seat(char row, int col){
 
 }
 
-bool check_seat(int mt, int position){
-
+bool check_seat(int mt, int position)
+{
 	string textline;
     vector<int> new_seat(28);
 	ifstream source;
@@ -887,7 +879,7 @@ void show_seat(int mt){
 }
 
 //add
-void cost(int mt,char *r,int *sn){
+void cost_ticket(int mt,char *r,int *sn){
 	//int cost=0;
 	cout << "Name : " << name;
 	cout << "\nSeat : ";
@@ -916,36 +908,6 @@ void cost(int mt,char *r,int *sn){
 		case 11 : source.open("Bill_m3t2.txt", ios::app); break;
 		case 12 : source.open("Bill_m3t3.txt", ios::app); break;
 	}
-}
-
-void bill()
-{
-	/*int cost=0;
-	cout << "Name : " << name;
-	cout << "\nSeat : ";
-	//cout << *r << r << &r;
-	for(int i=0;i<numofseat;i++)
-	{
-		cout << *(r+i) << *(sn+i) << " ";
-		if(*(r+i) == 'A' or *(r+i) == 'a')
-		{
-			cost+=180;
-		}
-		else cost+=120;
-	}
-	cout << "\nTotal ticket cost : " << cost;
-	fstream source;	
-	switch(mt){
-		case 2 : source.open("Bill_m1t1.txt", ios::app); break;
-		case 3 : source.open("Bill_m1t2.txt", ios::app); break;
-		case 4 : source.open("Bill_m1t3.txt", ios::app); break;
-		case 5 : source.open("Bill_m2t1.txt", ios::app); break;
-		case 6 : source.open("Bill_m2t2.txt", ios::app); break;
-		case 7 : source.open("Bill_m2t3.txt", ios::app); break;
-		case 10 : source.open("Bill_m3t1.txt", ios::app); break;
-		case 11 : source.open("Bill_m3t2.txt", ios::app); break;
-		case 12 : source.open("Bill_m3t3.txt", ios::app); break;
-	}*/
 	source << "\nName : " << name << "\n";
 	source << "Seat : ";
 	for(int i=0;i<numofseat;i++)
@@ -955,7 +917,6 @@ void bill()
 	source << "\n";
 	source.close();
 	//add
-	cout << "Total ticket cost : " << cost;
 	cout << "\n\t**The booking is successful.**\n";
 	cout << "\n\t\t**Thank you**\n";
 	home();
