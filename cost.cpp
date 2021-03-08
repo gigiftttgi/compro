@@ -5,9 +5,14 @@ int numofseat = 2;
 float cost = 0;
 char r = 'a';
 int sn = 2;
-string discount = "Hello";
+string discount;
 
-void costs(){
+void admin(){
+    cout << "add discount :";
+    cin >>discount;
+}
+
+/*void costs(){
     for(int i=0;i<numofseat;i++)
 	{
 		cout << (r+i) << (sn+i) << " ";
@@ -18,9 +23,9 @@ void costs(){
 		else cost+=120;
 	}
 	//cout << "\nTotal ticket cost : " << cost;
-}
+}*/
 
-void code(){
+void promotion(){
     bool user;
     string user_code;
     char key;
@@ -40,7 +45,7 @@ void code(){
             user = true;
         }
         else{
-            cout << "Please try again";
+            cout << "Please try again. ";
             user = false;
         }
     }while(user == false);
@@ -48,6 +53,7 @@ void code(){
 }
 
 int main(){
+    admin();
     code();
     return 0;
 }
