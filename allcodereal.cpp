@@ -308,16 +308,14 @@ void list(int l){
 			list(5);
 		}
 		else cout<<"Cancel Reservation Completed.\n";
-		
+		op_admin();
 	}
 	//add 
 	else if(l == 6){
 		cout << "Enter code promotion : ";
 		cin >> discount;
-	}
-	else
-	{
-		cout << "function cancel";
+		op_admin();
+
 	}
 }
 
