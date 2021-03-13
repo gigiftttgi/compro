@@ -28,6 +28,7 @@ void cost_ticket(int,char *,int *);
 int read_seat(char , int);
 bool check_seat(int , int );
 bool cancel_reserve(int, int);
+void edit_booklist(int , char , int );
 
 string rand_id();
 
@@ -298,16 +299,19 @@ void list(int l){
         cout << "Enter seat number : ";
         cin >> seatnum;
     	
-		int position = read_seat(row,seatnum);	
+		int position = read_seat(row,seatnum);
 
 		bool cancel = cancel_reserve(mt,position);
 	
 
-		if(cancel == false){
+		if(!cancel){
 			cout<<"Cancel Reservation Error.\n The seat is still empty.";
 			list(5);
 		}
-		else cout<<"Cancel Reservation Completed.\n";
+		else {
+			edit_booklist(mt,row,seatnum);
+			cout<<"Cancel Reservation Completed.\n";
+		}
 		op_admin();
 	}
 	//add 
@@ -317,6 +321,74 @@ void list(int l){
 		op_admin();
 
 	}
+}
+
+void edit_booklist(int mt, char input_row, int input_seatnum){
+
+	ifstream source;
+	string textline;
+
+	vector<string> row;
+    vector<int> seatnum;
+
+    string rowstring(1,input_row);
+
+	switch(mt){
+		case 2 : source.open("Booklist_m1t1.txt"); break;
+		case 3 : source.open("Booklist_m1t2.txt"); break;
+		case 4 : source.open("Booklist_m1t3.txt"); break;
+		case 5 : source.open("Booklist_m2t1.txt"); break;
+		case 6 : source.open("Booklist_m2t2.txt"); break;
+		case 7 : source.open("Booklist_m2t3.txt"); break;
+		case 10 : source.open("Booklist_m3t1.txt"); break;
+		case 11 : source.open("Booklist_m3t2.txt"); break;
+		case 12 : source.open("Booklist_m3t3.txt"); break;
+	}
+
+	int i = 0, j = 0;
+
+	while(getline(source,textline)){ 
+		if(i%2 == 0){
+            row.push_back(textline);
+			i++;
+        }
+        else{
+            seatnum.push_back(stoi(textline));
+			i++;
+			
+        }
+    }
+
+	source.clear();
+	source.close();
+
+	ofstream new_source;
+
+	switch(mt){
+		case 2 : new_source.open("Booklist_m1t1.txt"); break;
+		case 3 : new_source.open("Booklist_m1t2.txt"); break;
+		case 4 : new_source.open("Booklist_m1t3.txt"); break;
+		case 5 : new_source.open("Booklist_m2t1.txt"); break;
+		case 6 : new_source.open("Booklist_m2t2.txt"); break;
+		case 7 : new_source.open("Booklist_m2t3.txt"); break;
+		case 10 : new_source.open("Booklist_m3t1.txt"); break;
+		case 11 : new_source.open("Booklist_m3t2.txt"); break;
+		case 12 : new_source.open("Booklist_m3t3.txt"); break;
+	}
+
+    while(j<row.size()){
+        if(row[j] == rowstring && seatnum[j] == input_seatnum){
+			j++;
+		}
+		else{
+			new_source << row[j] <<"\n";
+			new_source << seatnum[j] <<"\n";
+			j++;
+		}
+    }
+
+    new_source.close();
+
 }
 
 bool cancel_reserve(int mt, int position){
@@ -858,7 +930,6 @@ void show_seat(int mt){
     }
 
     //display sofa row A
-    //the bug is seat C6 (position == 17) is not working
     
     cout<<setw(28)<<"- SOFA seat -\n";
     cout<<"A\t";
