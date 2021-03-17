@@ -1007,7 +1007,7 @@ void promotion(){
     string user_code, textline;
     char key;
 	if(ck_member == true){
-		cout << cost_ticket();
+		cout << cost_ticket(mt, &row[], &seatnum[]);
 	}else{
     	do{
         	cout << "Do you have promotion (Y or N) : ";
