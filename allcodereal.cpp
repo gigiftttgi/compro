@@ -7,6 +7,7 @@
 #include<cmath>
 #include<iomanip>
 #include<vector>
+#include "windows.h"
 using namespace std;
 
 void book_seat(string);
@@ -20,7 +21,6 @@ void filebooklist(char,int,int);
 void update_seat(int,int);
 void show_seat(int);
 void valiable_seat(int);
-void user_booking(int );
 void member(bool &ck_member,string &);
 void checkmem(string,bool &,string &);
 void ppl_seat(int);
@@ -49,6 +49,11 @@ int cost = 0;
 
 int main()
 {
+	HWND console = GetConsoleWindow();
+  	RECT ConsoleRect;
+  	GetWindowRect(console, &ConsoleRect); 
+
+   	MoveWindow(console, ConsoleRect.left, ConsoleRect.top, 800, 600, TRUE);
 	home();
 	return 0;
 }
@@ -73,7 +78,7 @@ void home()
 					 {
 						 cout << "\nAre you a member? (Y/N) : ";
 					 	 cin >> key;
-					 	 if(key == 'y' or key == 'Y')
+					 	 if(key == 'y' || key == 'Y')
 					 	 {
 						 	 string ch_id;
 						 	 cout << "Enter member id : ";
@@ -83,21 +88,21 @@ void home()
 						 	 user();
 							 a_member = true;
 					 	 }
-					 	 else if(key == 'N' or key == 'n')
+					 	 else if(key == 'N' || key == 'n')
 					 	 {
 						  	 char key;
 							 do
 							 {
 								 cout << "\nWould you like to become a member? (Y/N) : ";
 						 	 	 cin >> key;
-						 	 	 if(key == 'y' or key == 'Y')
+						 	 	 if(key == 'y' || key == 'Y')
 					 	 	 	 {
 							  	 	 member(ck_member,name_mem);
 							 	 	 cout << "\n\t\t**Welcom K." << name_mem << " **";
 							 	 	 user();
 									 be_mem=true;
 					 	 	 	 }
-						 	 	 else if(key == 'N' or key == 'n')
+						 	 	 else if(key == 'N' || key == 'n')
 						 	     {
 							 	 	 user();
 									 be_mem=true;
@@ -504,8 +509,7 @@ void valiable_seat(int mt){
     }
 	source.close();
 	
-	int N= k/2;
-    string out[N];
+    string out[28];
     int x=0;
 	int y=0;	
     while(y < k){
@@ -703,70 +707,62 @@ void user()
 		cout << "Theater " << i+1 << " : " << movie[i] << "\n";
 		cout << "Time   " << st[i] << "\n";
 	}
-	cout << "Choose movie (1-3) : ";
-	cin >> ch_movie;
-	while (ch_movie || ch_movie == 0)
-	{
-		if(ch_movie >=1 && ch_movie <= 3) break;
-		cout << "This movie does not exist. Please Select Again.\n";
-		cout << "\nChoose movie (1-3) : ";
-		cin >> ch_movie;		
-	}
+	
+	do{
+		cout << "Choose movie (1-3) : ";
+		cin >> ch_movie;
+		if(ch_movie > 3 || ch_movie < 1) cout<<"This movie does not exist. Please Select Again.\n";
+	}while(ch_movie > 3 || ch_movie < 1);
 
-	cout << "Choose Time (1-3) : ";
-	cin >> ch_time;
-	while (ch_time || ch_time==0)
-	{
-		if(ch_time >= 1 && ch_time <= 3) break;
-		cout << "This time does not exist. Please Select Again.\n";
-		cout << "\nChoose time (1-3) : ";
-		cin >> ch_time;		
-	}
+
+	do{
+		cout << "Choose Time (1-3) : ";
+		cin >> ch_time;
+		if(ch_time > 3 || ch_time < 1) cout<<"This time does not exist. Please Select Again.\n";
+	}while(ch_time > 3 || ch_time < 1);
+
 	mt = pow(ch_movie,2)+ch_time;
-	cin.ignore();
-	user_booking(mt);
+
+	show_seat(mt);
+ 	cout << "Price\nRow B-E : 120\nRow A : 180\n";  
+    cout << "How many seat do you want? (MAx 4|Min 1) : ";
+    cin >> numofseat;
+ 	while (numofseat || numofseat == 0){
+  		if(numofseat>=1 && numofseat<=4) break;
+  		if(numofseat > 4){
+   			cout << "There are too many seats. Please Enter Again.";
+  		}else{
+   		cout << "Error. Please Enter number of seats you want";
+  		}
+  		cout << "\n\nHow many seat do you want? (MAx 4|Min 1) : ";
+     	cin >> numofseat;  
+ 	}
+
 
     for(int i=0;i<numofseat;i++)
     {
-        cout << "\nSeat " << i+1;
-        cout << "\nEnter row : ";
-        cin >> row[i];
-        cout << "Enter seat number : ";
-        cin >> seatnum[i];
-        filebooklist(row[i],seatnum[i],mt);
+		bool checkseat;
+		int position;
+		do{
+			cout << "\nSeat " << i+1;
+        	cout << "\nEnter row : ";
+        	cin >> row[i];
+        	cout << "Enter seat number : ";
+        	cin >> seatnum[i];
+			position = read_seat(row[i],seatnum[i]);
+			if(check_seat(mt,position) == false) cout<<"Error. This seat has been booked.\nPlease try again. ";
+		}while(check_seat(mt,position) == false);
 
-        int position = read_seat(row[i],seatnum[i]);
-        bool checkseat = check_seat(mt,position);
-
-        while(checkseat == false){
-            cout<<"Error. This seat has been booked.\n";
-            cout<<"Please try again";
-        user_booking(mt);
-        }
         update_seat(position,mt); 
+		filebooklist(row[i],seatnum[i],mt);
+
     }
+
 	show_seat(mt);
 	cin.ignore();
 	cout << "\nEnter name : ";
 	getline(cin,name);
 	cost_ticket(mt,row,seatnum);
-}
-
-void user_booking(int mt){
- show_seat(mt);
- cout << "Price\nRow B-E : 120\nRow A : 180\n";  
-    cout << "How many seat do you want? (MAx 4|Min 1) : ";
-    cin >> numofseat;
- while (numofseat || numofseat == 0){
-  if(numofseat>=1 && numofseat<=4) break;
-  if(numofseat > 4){
-   cout << "There are too many seats. Please Enter Again.";
-  }else{
-   cout << "Error. Please Enter number of seats you want";
-  }
-  cout << "\n\nHow many seat do you want? (MAx 4|Min 1) : ";
-     cin >> numofseat;  
- }
 }
 
 void filebooklist(char row,int seatnum,int mt)
@@ -967,14 +963,14 @@ void cost_ticket(int mt,char *r,int *sn){
 	for(int i=0;i<numofseat;i++){
 		if(ck_member == true){
 			cout << *(r+i) << *(sn+i) << " ";
-				if(*(r+i) == 'A' or *(r+i) == 'a'){
+				if(*(r+i) == 'A' || *(r+i) == 'a'){
 						cost+=150;
 					}else{
 						cost+=90;
 					}
 			}else{
 				cout << *(r+i) << *(sn+i) << " ";
-				if(*(r+i) == 'A' or *(r+i) == 'a'){
+				if(*(r+i) == 'A' || *(r+i) == 'a'){
 					cost+=180;
 				}else cost+=120;
 			}
