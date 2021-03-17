@@ -761,7 +761,7 @@ void user()
 	cin.ignore();
 	cout << "\nEnter name : ";
 	getline(cin,name);
-	cost_ticket(mt,&row[4],seatnum[28]);
+	cost_ticket(mt,&row[4],&seatnum[28]);
 }
 
 void filebooklist(char row,int seatnum,int mt)
@@ -973,9 +973,11 @@ void cost_ticket(int mt,char *r,int *sn){
 				}else cost+=120;
 			}
 		}
+	cout << "\nTotal ticket cost : " << cost;
 	//add
-	promotion();
-	//cout << "\nTotal ticket cost : " << cost;
+	if(ck_member == false){
+		promotion();
+	}
 	fstream source;	
 	switch(mt){
 		case 2 : source.open("Bill_m1t1.txt", ios::app); break;
@@ -1007,7 +1009,7 @@ void promotion(){
     string user_code, textline;
     char key;
     do{
-        cout << "Do you have promotion (Y or N) : ";
+        cout << "\nDo you have promotion (Y or N) : ";
         cin >> key;
         if(key == 'y' || key == 'Y'){
             cout << "Enter promotion : ";
@@ -1016,13 +1018,13 @@ void promotion(){
 			source.open("promotion.txt");
 			while(getline(source,textline)){
             	if(textline == user_code){
-                	cout << "Total ticket cost : " << cost - (cost*10)/100 << "Bath.";
+                	cout << "Total ticket cost : " << cost - (cost*10)/100 << " Bath.";
             	}
             	user = true;
 			}
         }
         else if(key =='n' || key == 'N'){
-            cout << "Total ticket cost : " << cost << "Bath.";
+            cout << "Total ticket cost : " << cost << " Bath.";
             user = true;
         }else{
             cout << "Please try again. ";

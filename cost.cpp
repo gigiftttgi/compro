@@ -52,13 +52,13 @@ void promotion(){
                 source.open("promotioncode.txt");
                 while(getline(source,textline)){
                     if(textline == user_code){
-                        cout << "Total ticket cost : " << cost - (cost*10)/100 << "Bath.";
+                        cout << "Total ticket cost : " << cost - (cost*10)/100 << " Bath.";
                     }
                 user = true;
                 }
             }
             else if(key =='n' || key == 'N'){
-                cout << "Total ticket cost : " << cost << "Bath.";
+                cout << "Total ticket cost : " << cost << " Bath.";
                 user = true;
             }
             else{
