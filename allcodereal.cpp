@@ -973,6 +973,7 @@ void cost_ticket(int mt,char *r,int *sn){
 						cost+=90;
 					}
 			}else{
+				cout << *(r+i) << *(sn+i) << " ";
 				if(*(r+i) == 'A' or *(r+i) == 'a'){
 					cost+=180;
 				}else cost+=120;
@@ -1010,7 +1011,7 @@ void cost_ticket(int mt,char *r,int *sn){
 
 void promotion(int cost){
     //bool user=false,ck_pro=false;
-    string user_code, text;
+    string user_code, textline;
     char key;
     while(key != 'y' && key != 'Y' && key != 'n' && key != 'N'){
         cout << "Do you have discount (Y or N) : ";
