@@ -20,10 +20,11 @@ void filebooklist(char,int,int);
 void update_seat(int,int);
 void show_seat(int);
 void valiable_seat(int);
+void user_booking(int );
 void member(bool &ck_member,string &);
 void checkmem(string,bool &,string &);
 void ppl_seat(int);
-void promotion();
+void promotion(int);
 void cost_ticket(int,char *,int *);
 int read_seat(char , int);
 bool check_seat(int , int );
@@ -723,25 +724,7 @@ void user()
 	}
 	mt = pow(ch_movie,2)+ch_time;
 	cin.ignore();
-	show_seat(mt);
-	if(ck_member==true){
-		cout << "Price\nRow B-E : 90\nRow A : 150\n"; 
-	}
-	else{
-		cout << "Price\nRow B-E : 120\nRow A : 180\n"; 
-	} 
-    cout << "How many seat do you want? (MAx 4|Min 1) : ";
-    cin >> numofseat;
-	while (numofseat || numofseat == 0){
-		if(numofseat>=1 && numofseat<=4) break;
-		if(numofseat > 4){
-			cout << "There are too many seats. Please Enter Again.";
-		}else{
-			cout << "Error. Please Enter number of seats you want";
-		}
-		cout << "\n\nHow many seat do you want? (MAx 4|Min 1) : ";
-    	cin >> numofseat;		
-	}
+	user_booking(mt);
 
     for(int i=0;i<numofseat;i++)
     {
@@ -752,21 +735,38 @@ void user()
         cin >> seatnum[i];
         filebooklist(row[i],seatnum[i],mt);
 
-		int position = read_seat(row[i],seatnum[i]);
-		bool checkseat = check_seat(mt,position);
+        int position = read_seat(row[i],seatnum[i]);
+        bool checkseat = check_seat(mt,position);
 
-		while(checkseat == false){
-			cout<<"Error. This seat has been booked.\n";
-			cout<<"Please try again";
-			user();
-		}
-		update_seat(position,mt);	
+        while(checkseat == false){
+            cout<<"Error. This seat has been booked.\n";
+            cout<<"Please try again";
+        user_booking(mt);
+        }
+        update_seat(position,mt); 
     }
 	show_seat(mt);
 	cin.ignore();
 	cout << "\nEnter name : ";
 	getline(cin,name);
 	cost_ticket(mt,row,seatnum);
+}
+
+void user_booking(int mt){
+ show_seat(mt);
+ cout << "Price\nRow B-E : 120\nRow A : 180\n";  
+    cout << "How many seat do you want? (MAx 4|Min 1) : ";
+    cin >> numofseat;
+ while (numofseat || numofseat == 0){
+  if(numofseat>=1 && numofseat<=4) break;
+  if(numofseat > 4){
+   cout << "There are too many seats. Please Enter Again.";
+  }else{
+   cout << "Error. Please Enter number of seats you want";
+  }
+  cout << "\n\nHow many seat do you want? (MAx 4|Min 1) : ";
+     cin >> numofseat;  
+ }
 }
 
 void filebooklist(char row,int seatnum,int mt)
@@ -964,10 +964,10 @@ void cost_ticket(int mt,char *r,int *sn){
 	cout << "\nSeat : ";
 	//cout << *r << r << &r;
 	//add price of member
-		for(int i=0;i<numofseat;i++){
-			if(ck_member == true){
-				cout << *(r+i) << *(sn+i) << " ";
-					if(*(r+i) == 'A' or *(r+i) == 'a'){
+	for(int i=0;i<numofseat;i++){
+		if(ck_member == true){
+			cout << *(r+i) << *(sn+i) << " ";
+				if(*(r+i) == 'A' or *(r+i) == 'a'){
 						cost+=150;
 					}else{
 						cost+=90;
@@ -979,8 +979,13 @@ void cost_ticket(int mt,char *r,int *sn){
 			}
 		}
 	//add
+<<<<<<< HEAD
 	cout << "\nTotal ticket cost : " << cost;
 	promotion();
+=======
+	promotion(cost);
+	//cout << "\nTotal ticket cost : " << cost;
+>>>>>>> 261451bffe201e82097be52a41df12754c42fbb4
 	fstream source;	
 	switch(mt){
 		case 2 : source.open("Bill_m1t1.txt", ios::app); break;
@@ -1007,6 +1012,7 @@ void cost_ticket(int mt,char *r,int *sn){
 	home();
 }
 
+<<<<<<< HEAD
 void promotion(){
     string user_code, textline;
     char key;
@@ -1034,5 +1040,48 @@ void promotion(){
             }
         };
     //costs();
+=======
+void promotion(int cost){
+    bool user=false,ck_pro=false;
+    string user_code, text;
+    char key;
+    	do{
+        	cout << "\nDo you have promotion (Y or N) : ";
+        	cin >> key;
+        	if(key == 'y' || key == 'Y')
+            {
+            	cout << "Enter promotion : ";
+            	cin >> user_code;
+				ifstream source;
+				source.open("promotioncode.txt");
+                while(getline(source,text))
+                {
+                    if(text==user_code)
+                    {
+                        ck_pro=true;
+                    }
+                }      
+                source.close();
+                if(ck_pro==true)
+                {
+                    cout << "Total ticket cost : " << cost-cost*0.10 << " Bath.";
+                    user = true;
+                }
+                else{
+                    cout << "your promotion code is wrong\n";
+                    user = false;
+                }
+        	}
+        	else if(key =='n' || key == 'N'){
+            	cout << "Total ticket cost : " << cost << "Bath.";
+            	user = true;
+        	}
+        	else
+            {
+            	cout << "Please try again. ";
+            	user = false;
+        	}
+    	}while(user == false);
+>>>>>>> 261451bffe201e82097be52a41df12754c42fbb4
 }
 
