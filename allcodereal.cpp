@@ -959,7 +959,7 @@ void show_seat(int mt){
 
 //add
 void cost_ticket(int mt,char *r,int *sn){
-	//int cost=0;
+	int cost=0;
 	cout << "Name : " << name;
 	cout << "\nSeat : ";
 	//cout << *r << r << &r;
@@ -979,10 +979,8 @@ void cost_ticket(int mt,char *r,int *sn){
 			}
 		}
 	//add
-	if(ck_member == false){
-		promotion();
-	}
-	//cout << "\nTotal ticket cost : " << cost;
+	cout << "\nTotal ticket cost : " << cost;
+	promotion();
 	fstream source;	
 	switch(mt){
 		case 2 : source.open("Bill_m1t1.txt", ios::app); break;
@@ -1010,31 +1008,31 @@ void cost_ticket(int mt,char *r,int *sn){
 }
 
 void promotion(){
-    bool user;
     string user_code, textline;
     char key;
-    	do{
-        	cout << "Do you have promotion (Y or N) : ";
-        	cin >> key;
-        	if(key == 'y' || key == 'Y'){
-            	cout << "Enter promotion : ";
-            	cin >> user_code;
-				ifstream source;
-				source.open("promotion.txt");
-				while(getline(source,textline)){
-            		if(textline == user_code){
-                		cout << "Total ticket cost : " << cost - (cost*10)/100 << "Bath.";
-            		}
-            	user = true;
-				}
-        	}
-        	else if(key =='n' || key == 'N'){
-            	cout << "Total ticket cost : " << cost << "Bath.";
-            	user = true;
-        	}
-        	else{
-            	cout << "Please try again. ";
-            	user = false;
-        	}
-    	}while(user == false);
+        while(key != 'y' && key != 'Y' && key != 'n' && key != 'N'){
+            cout << "Do you have discount (Y or N) : ";
+            cin >> key;
+            if(key == 'y' || key == 'Y'){
+                cout << "Enter code : ";
+                cin >> user_code;
+                ifstream source;
+                source.open("promotioncode.txt");
+                while(getline(source,textline)){
+                    if(textline == user_code){
+                        cost = cost - (cost*10)/100;
+                    }
+                }
+				source.close();
+				cout << "Total ticket cost : " << cost << " Bath.\n";
+            }
+            else if(key =='n' || key == 'N'){
+                cout << "Total ticket cost : " << cost << " Bath.\n";
+            }
+            else{
+                cout << "Please try again. ";
+            }
+        };
+    //costs();
 }
+
