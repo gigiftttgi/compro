@@ -152,38 +152,36 @@ void admin(){
 	int count = 0;
 	
 	cout <<"\n\t----------------------------------------------------";
-	cout << "\n\t\tEnter passcode : ";
-	passch = getch();
-	while(passch != 13){
-      	pass.push_back(passch);
-      	cout << '*';
-      	passch = getch();
-   	}
+
+    while(c_pass==false){
+        pass="";
+	    cout << "\n\t\tEnter passcode : ";
+	    passch = getch();
+
+	    while(passch != 13){
+      	    pass.push_back(passch);
+      	    cout << '*';
+      	    passch = getch();
+   	    }
 		
-	if(pass == keypass){
-		c_pass = true;
-	}
-	else{
-		do{
+	    if(pass == keypass){
+		    c_pass = true;
+            op_admin();
+	    }else{
+            count++;
 			cout << "\nWrong passcode!!!\n" ;
 			cout<< "Please enter again.\n";
-			cout << "\n\t\tEnter passcode : ";
-			passch = getch();
-			while(passch != 13){
-      			pass.push_back(passch);
-      			cout << '*';
-      			passch = getch();
-   			}
-			if(pass == keypass) c_pass = true;
-			count++;
 			if(count >= 4){
 				cout<< "System lock!!!";
 				home();
-			}
-		}while(pass != keypass);
+            }
+		}
+        if(count >= 4){
+			cout<< "System lock!!!";
+			home();
+		}
 		
 	}
-	op_admin();
 }
 
 void op_admin()
@@ -604,15 +602,25 @@ void valiable_seat(int mt){
 		cout << "seat\n";
 	}
 
-	int opt;
-	cout << "\nDo you want to check who belong to seat? (1.Yes | 2.No)\n";
-	cout << "Enter option : ";
-	cin >> opt;
-	if(opt == 1){
-		ppl_seat(mt);
-	}else{ 
-		op_admin();
-	}   
+	string opt;
+	bool op = false;
+
+	while(op==false){
+		cout << "\nDo you want to check who belong to seat? (1.Yes | 2.No)\n";
+		cout << "Enter option : ";
+		cin >> opt;
+
+		if(opt == "1"){
+			op=true;
+			ppl_seat(mt);
+		}else if(opt == "2"){
+			op=true; 
+			op_admin();
+		}else{
+			cout << "Error. Please enter again.\n";
+		}
+	}
+	   
 
 }
 
@@ -1112,4 +1120,3 @@ void promotion(int cost){
     };
 	cout <<"\t----------------------------------------------------\n";
 }
-
