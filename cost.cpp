@@ -36,13 +36,9 @@ void admin(){
 }*/
 
 void promotion(){
-    bool user;
     string user_code, textline;
     char key;
-    if(ck_member == true){
-        cout << "cost\n";
-    }else{
-        do{
+        while(key != 'y' && key != 'Y' && key != 'n' && key != 'N'){
             cout << "Do you have discount (Y or N) : ";
             cin >> key;
             if(key == 'y' || key == 'Y'){
@@ -52,21 +48,19 @@ void promotion(){
                 source.open("promotioncode.txt");
                 while(getline(source,textline)){
                     if(textline == user_code){
-                        cout << "Total ticket cost : " << cost - (cost*10)/100 << " Bath.";
+                        cost - (cost*10)/100;
                     }
-                user = true;
                 }
+                source.close();
+                cout << "Total ticket cost : " << cost << " Bath.\n";
             }
             else if(key =='n' || key == 'N'){
-                cout << "Total ticket cost : " << cost << " Bath.";
-                user = true;
+                cout << "Total ticket cost : " << cost << " Bath.\n";
             }
             else{
                 cout << "Please try again. ";
-                user = false;
             }
-        }while(user == false);
-    }
+        };
     //costs();
 }
 
