@@ -1012,7 +1012,6 @@ void cost_ticket(int mt,char *r,int *sn){
 	home();
 }
 
-<<<<<<< HEAD
 void promotion(){
     string user_code, textline;
     char key;
@@ -1040,7 +1039,6 @@ void promotion(){
             }
         };
     //costs();
-=======
 void promotion(int cost){
     bool user=false,ck_pro=false;
     string user_code, text;
