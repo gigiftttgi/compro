@@ -661,8 +661,8 @@ void ppl_seat(int mt){
 
 	source.close();
 	
-	int opt = 1;
-	while(opt==1){
+	string opt = "1";
+	while(opt=="1"){
 		cout << "\nPlease input seat you want: ";
 		cin >> s;
 		int found;
@@ -675,9 +675,16 @@ void ppl_seat(int mt){
         	}
 		}
 		if(status==0) cout << "This seat hasn't bought yet.\n";
+
+		bool op =false;
+		
+		do{
 		cout << "\nDo you want to check it again? (1.Yes | 2.No)\n";
 		cout << "Enter option : ";
 		cin >> opt;
+		if(opt=="1" || opt == "2") op=true;
+		else cout << "Error. Please enter again.\n";
+		}while(op==false);
 	}
 	op_admin();
 }
