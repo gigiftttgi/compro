@@ -53,10 +53,11 @@ int main()
   	RECT ConsoleRect;
   	GetWindowRect(console, &ConsoleRect); 
 
-   	MoveWindow(console, ConsoleRect.left, ConsoleRect.top, 800, 600, TRUE);
+   	MoveWindow(console, ConsoleRect.left, ConsoleRect.top, 600, 600, TRUE);
 	home();
 	return 0;
 }
+
 
 void home()
 {
@@ -65,26 +66,32 @@ void home()
 	bool be_mem = false;
 	bool a_member = false;
 	do{
-		cout << "\n\t\t***Welcome to Theater***\n";
-		cout << "1. for User\n";
-		cout << "2. for Admin\n";
-		cout << "0. for Exit\n";
-		cout << "Select option :  ";
+		cout << "\n\n\n\n\n";
+		cout << setw(43) <<"--------------------------"<<endl;
+		cout << setw(45) << "| ***Welcome to Theater*** |\n";
+		cout << setw(43) <<"--------------------------"<<endl;
+		cout << "\n";
+		cout << setw(30) << "\t1. for User\n";
+		cout << setw(30) << "\t2. for Admin\n";
+		cout << setw(30) << "\t0. for Exit\n";
+		cout << setw(30) << "\t\tSelect option :  ";
 		cin >> op;
 		switch(op)
 		{
 			case 1 : char key;
 					 do
 					 {
-						 cout << "\nAre you a member? (Y/N) : ";
+						 cout <<"\n\t----------------------------------------------------\n";
+						 cout << "\t\tAre you a member? (Y/N) : ";
 					 	 cin >> key;
 					 	 if(key == 'y' || key == 'Y')
 					 	 {
 						 	 string ch_id;
-						 	 cout << "Enter member id : ";
+						 	 cout << "\t\tEnter member id : ";
 						 	 cin >> ch_id;
 						 	 checkmem(ch_id,ck_member,name_mem);
-						 	 cout << "\n\t\t\t**Welcom K." << name_mem << " **";
+							 cout<<endl;
+						 	 cout << "\t\t**Welcom K." << name_mem << " **";
 						 	 user();
 							 a_member = true;
 					 	 }
@@ -93,12 +100,14 @@ void home()
 						  	 char key;
 							 do
 							 {
-								 cout << "\nWould you like to become a member? (Y/N) : ";
+								 
+								 cout << "\t\tWould you like to become a member? (Y/N) : ";
 						 	 	 cin >> key;
 						 	 	 if(key == 'y' || key == 'Y')
 					 	 	 	 {
 							  	 	 member(ck_member,name_mem);
-							 	 	 cout << "\n\t\t**Welcom K." << name_mem << " **";
+									 cout<<endl;
+							 	 	 cout << "\t\t**Welcom K." << name_mem << " **";
 							 	 	 user();
 									 be_mem=true;
 					 	 	 	 }
@@ -109,14 +118,14 @@ void home()
 						 	 	 }
 							 	 else 
 								 {
-									 cout << "Please enter y/n\n";
+									 cout << "\t\t Please enter y/n \n";
 								 }
 							 }while(be_mem==false);
 							 a_member = true;
 					 	 }
 						 else
 						 {
-							cout << "Please enter y/n\n";
+							cout << "\t\t Please enter y/n ";
 
 						 }
 					 }while(a_member == false);
@@ -127,8 +136,10 @@ void home()
 					 break;
 			case 0 : c_op = true; 
 					 break;
-			default : cout << "\nPlease select again\n\n";
-					  break;
+			default : 
+						cout<<endl;
+						cout << "\n\t\tPlease select again\n\n";
+						break;
 		}
 	}while(c_op == false);
 }
@@ -139,27 +150,39 @@ void admin(){
 	char passch;
 	bool c_pass = false;
 	int count = 0;
-	do{
-		cout << "\nEnter passcode : ";
-		passch = getch();
-		while(passch != 13){
-      		pass.push_back(passch);
-      		cout << '*';
-      		passch = getch();
-   		}
-		if(pass == keypass){
-			c_pass = true;
-		}
-		else{
+	
+	cout <<"\n\t----------------------------------------------------";
+	cout << "\n\t\tEnter passcode : ";
+	passch = getch();
+	while(passch != 13){
+      	pass.push_back(passch);
+      	cout << '*';
+      	passch = getch();
+   	}
+		
+	if(pass == keypass){
+		c_pass = true;
+	}
+	else{
+		do{
 			cout << "\nWrong passcode!!!\n" ;
+			cout<< "Please enter again.\n";
+			cout << "\n\t\tEnter passcode : ";
+			passch = getch();
+			while(passch != 13){
+      			pass.push_back(passch);
+      			cout << '*';
+      			passch = getch();
+   			}
+			if(pass == keypass) c_pass = true;
+			count++;
 			if(count >= 4){
-				cout<< "System lock!!! Please wait and try again\n";
+				cout<< "System lock!!!";
 				home();
 			}
-			cout<< "Please enter again.\n";
-			count++;
-		}
-	}while(c_pass==false);	
+		}while(pass != keypass);
+		
+	}
 	op_admin();
 }
 
@@ -167,17 +190,19 @@ void op_admin()
 {
 	int aop;
 	bool c_aop = false;
+	cout <<"\n\t----------------------------------------------------";
+	cout << "\n\n\t\t|\t***Admin Menu***\t|\n";
+	cout <<"\n\t----------------------------------------------------\n";
 	do{
-		cout << "\t\n< Admin menu >\n";
-		cout << "1. Add movie\n";
-		cout << "2. Change movie\n";
-		cout << "3. Check movie\n";
-		cout << "4. Check valiable seat\n";
-		cout << "5. Cancel reservation\n";
-		//add 
-		cout << "6. Change discount\n";
-		cout << "0. Exit to home\n";
-		cout << "Enter option : ";
+		cout << "\t1. Add movie"<<endl;
+		cout << "\t2. Change movie"<<endl;
+		cout << "\t3. Check movie"<<endl;
+		cout << "\t4. Check valiable seat"<<endl;
+		cout << "\t5. Cancel reservation"<<endl;
+		cout << "\t6. Change discount"<<endl;
+		cout << "\t7. Reset seat"<<endl;
+		cout << "\t0. Exit to home"<<endl;
+		cout << "\tEnter option : ";
 		cin >> aop;
 		switch(aop){
 			case 0 : home();
@@ -198,11 +223,13 @@ void op_admin()
 			case 5 : list(5);
 			   	     c_aop = true;
 					 break;		
-		//add
 			case 6 : list(6);
 					 c_aop = true;
 					 break;
-			default : cout << "Please enter again.\n";
+			case 7 : list(7);
+					 c_aop = true;
+					 break;
+			default : cout << setw(30) << "\t\tPlease enter again.\n";
 					  break;
 		}
 	}while(c_aop == false);		
@@ -214,10 +241,10 @@ void list(int l){
 	cin.ignore();
 	if(l==1)
 	{
-		cout << "\n< Adding Movie >\n";
+		cout << "\n\t\t< Adding Movie >\n";
 		for(int i=0;i<3;i++)
 		{
-			cout << "Enter movie (Theater " << i+1 << ") : ";
+			cout << "\t\tEnter movie (Theater " << i+1 << ") : ";
 			getline(cin,movie[i]);
 		}
 		op_admin();
@@ -226,46 +253,46 @@ void list(int l){
 	{
 		int th;
 		string n_mo;
-		cout << "\n< Changing Movie >\n";
-		cout << "Enter theater that you want to change : ";
+		cout << "\n\t\t< Changing Movie >\n";
+		cout << "\t\tEnter theater that you want to change : ";
 		cin >> th;
 		cin.ignore();
-		cout << "Enter new movie : ";
+		cout << "\t\tEnter new movie : ";
 		getline(cin,n_mo);
 		*(m+th-1) = n_mo;
-		cout << "Change already.\n\n";
+		cout << "\t\tChange already.\n\n";
 		op_admin();	
 	}
 	else if(l==3)
 	{
-		cout << "\n< Show time >\n";
+		cout << "\n\t\t< Show time >\n";
 		for(int i=0;i<3;i++)
 		{
-			cout << "Theater " << i+1 << " : " << movie[i] << "\n";
-			cout << "Time\n" << st[i] << "\n";
+			cout << "\t\tTheater " << i+1 << " : " << movie[i] << "\n";
+			cout << "\t\tTime\n" << st[i] << "\n";
 		}
 		cout << "\n";
 		op_admin();
 	}
 	else if(l==4)
 	{
-		cout << "\n< Check Valiable Seat >\n";
-		cout << "Choose movie (1-3) : ";
+		cout << "\n\t\t< Check Valiable Seat >\n";
+		cout << "\t\tChoose movie (1-3) : ";
 		cin >> ch_movie;
 		while (ch_movie || ch_movie == 0)
 		{
 			if(ch_movie >=1 && ch_movie <= 3) break;
-			cout << "This movie does not exist. Please Select Again.\n";
-			cout << "\nChoose movie (1-3) : ";
+			cout << "\t\tThis movie does not exist. Please Select Again.\n";
+			cout << "\n\t\tChoose movie (1-3) : ";
 			cin >> ch_movie;
 		}
-		cout << "Choose Time (1-3) : ";
+		cout << "\t\tChoose Time (1-3) : ";
 		cin >> ch_time;
 		while (ch_time || ch_time==0)
 		{
 			if(ch_time >= 1 && ch_time <= 3) break;
-			cout << "This time does not exist. Please Select Again.\n";
-			cout << "\nChoose time (1-3) : ";
+			cout << "\t\tThis time does not exist. Please Select Again.\n";
+			cout << "\n\t\tChoose time (1-3) : ";
 			cin >> ch_time;		
 		}
 		mt = pow(ch_movie,2)+ch_time;
@@ -274,35 +301,35 @@ void list(int l){
 	else if(l==5){
 		int ch_movie,ch_time,seatnum;
 		char row;
-		cout << "\n< Cancel Reservation >\n";
+		cout << "\n\t\t< Cancel Reservation >\n";
 		for(int i=0;i<3;i++)
 		{
-			cout << "Theater " << i+1 << " : " << movie[i] << "\n";
-			cout << "Time   " << st[i] << "\n";
+			cout << "\t\tTheater " << i+1 << " : " << movie[i] << "\n";
+			cout << "\t\tTime   " << st[i] << "\n";
 		}
-		cout << "Choose movie (1-3) : ";
+		cout << "\t\tChoose movie (1-3) : ";
 		cin >> ch_movie;
 		while (ch_movie || ch_movie == 0){
 			if(ch_movie >=1 && ch_movie <= 3) break;
-			cout << "This movie does not exist. Please Select Again.\n";
-			cout << "\nChoose movie (1-3) : ";
+			cout << "\t\tThis movie does not exist. Please Select Again.\n";
+			cout << "\n\t\tChoose movie (1-3) : ";
 			cin >> ch_movie;
 		}
 
-		cout << "Choose Time (1-3) : ";
+		cout << "\t\tChoose Time (1-3) : ";
 		cin >> ch_time;
 		while (ch_time || ch_time==0){
 			if(ch_time >= 1 && ch_time <= 3) break;
-			cout << "This time does not exist. Please Select Again.\n";
-			cout << "\nChoose time (1-3) : ";
+			cout << "\t\tThis time does not exist. Please Select Again.\n";
+			cout << "\n\t\tChoose time (1-3) : ";
 			cin >> ch_time;	
 		}
 
 		int mt = pow(ch_movie,2)+ch_time;
 
-        cout << "\nEnter row : ";
+        cout << "\n\t\tEnter row : ";
         cin >> row;
-        cout << "Enter seat number : ";
+        cout << "\t\tEnter seat number : ";
         cin >> seatnum;
     	
 		int position = read_seat(row,seatnum);
@@ -311,25 +338,55 @@ void list(int l){
 	
 
 		if(!cancel){
-			cout<<"Cancel Reservation Error.\n The seat is still empty.";
+			cout<<"\t\tCancel Reservation Error.\n\t\tThis seat is still empty.";
 			list(5);
 		}
 		else {
 			edit_booklist(mt,row,seatnum);
-			cout<<"Cancel Reservation Completed.\n";
+			cout<<"\t\tCancel Reservation Completed.\n";
 		}
 		op_admin();
 	}
-	//add loop discount**
 	else if(l == 6){
 			while(discount != "0"){
-        		cout << "add discount( 0 for exit) : ";
+        		cout << "\t\tadd discount( 0 for exit) : ";
         		cin >> discount;
         		fstream source;
         		source.open("promotioncode.txt",ios::app);
         		source << discount << endl;
         		source.close();
     		}
+		op_admin();
+	}
+	else if(l == 7){
+		cout << "\n\t\t< Reset seat >\n";
+		for(int i=0;i<3;i++)
+		{
+			cout << "\t\tTheater " << i+1 << " : " << movie[i] << "\n";
+			cout << "\t\tTime   " << st[i] << "\n";
+		}
+		cout << "\t\tChoose movie (1-3) : ";
+		cin >> ch_movie;
+		while (ch_movie || ch_movie == 0){
+			if(ch_movie >=1 && ch_movie <= 3) break;
+			cout << "\t\tThis movie does not exist. Please Select Again.\n";
+			cout << "\n\t\tChoose movie (1-3) : ";
+			cin >> ch_movie;
+		}
+
+		cout << "\t\tChoose Time (1-3) : ";
+		cin >> ch_time;
+		while (ch_time || ch_time==0){
+			if(ch_time >= 1 && ch_time <= 3) break;
+			cout << "\t\tThis time does not exist. Please Select Again.\n";
+			cout << "\n\t\tChoose time (1-3) : ";
+			cin >> ch_time;	
+		}
+
+		int mt = pow(ch_movie,2)+ch_time;
+		update_seat(0,mt);
+		cout<<"\n";
+		edit_booklist(mt,'0',0);
 		op_admin();
 	}
 }
@@ -387,16 +444,21 @@ void edit_booklist(int mt, char input_row, int input_seatnum){
 		case 12 : new_source.open("Booklist_m3t3.txt"); break;
 	}
 
-    while(j<row.size()){
-        if(row[j] == rowstring && seatnum[j] == input_seatnum){
-			j++;
-		}
-		else{
-			new_source << row[j] <<"\n";
-			new_source << seatnum[j] <<"\n";
-			j++;
-		}
-    }
+    if(input_row == '0' && input_seatnum == 0){
+		new_source << " ";
+		cout<<"Booklist clear.";
+	}else{
+		while(j<row.size()){
+        	if(row[j] == rowstring && seatnum[j] == input_seatnum){
+				j++;
+			}
+			else{
+				new_source << row[j] <<"\n";
+				new_source << seatnum[j] <<"\n";
+				j++;
+			}
+    	}
+	}
 
     new_source.close();
 
@@ -701,40 +763,42 @@ void checkmem(string key,bool &ck_member,string &name_mem)
 
 void user()
 {
-	cout << "\n\t***Cinema Show time***\n";
+	cout <<"\n\t----------------------------------------------------\n";
+	cout << "\n\t\t\t***Cinema Show time***\n";
+	cout <<"\n\t----------------------------------------------------\n";
 	for(int i=0;i<3;i++)
 	{
-		cout << "Theater " << i+1 << " : " << movie[i] << "\n";
-		cout << "Time   " << st[i] << "\n";
+		cout << "\t\tTheater " << i+1 << " : " << movie[i] << "\n";
+		cout << "\t\tTime   " << st[i] << "\n";
 	}
 	
 	do{
-		cout << "Choose movie (1-3) : ";
+		cout << "\t\tChoose movie (1-3) : ";
 		cin >> ch_movie;
-		if(ch_movie > 3 || ch_movie < 1) cout<<"This movie does not exist. Please Select Again.\n";
+		if(ch_movie > 3 || ch_movie < 1) cout<<"\t\tThis movie does not exist. Please Select Again.\n";
 	}while(ch_movie > 3 || ch_movie < 1);
 
 
 	do{
-		cout << "Choose Time (1-3) : ";
+		cout << "\t\tChoose Time (1-3) : ";
 		cin >> ch_time;
-		if(ch_time > 3 || ch_time < 1) cout<<"This time does not exist. Please Select Again.\n";
+		if(ch_time > 3 || ch_time < 1) cout<<"\t\tThis time does not exist. Please Select Again.\n";
 	}while(ch_time > 3 || ch_time < 1);
 
 	mt = pow(ch_movie,2)+ch_time;
 
 	show_seat(mt);
- 	cout << "Price\nRow B-E : 120\nRow A : 180\n";  
-    cout << "How many seat do you want? (MAx 4|Min 1) : ";
+ 	cout << "\n\n\t\tPrice Row B-E : 120\tRow A : 180\n\n";  
+    cout << "\tHow many seat do you want? (MAx 4|Min 1) : ";
     cin >> numofseat;
  	while (numofseat || numofseat == 0){
   		if(numofseat>=1 && numofseat<=4) break;
   		if(numofseat > 4){
-   			cout << "There are too many seats. Please Enter Again.";
+   			cout << "\t\tThere are too many seats. Please Enter Again.";
   		}else{
-   		cout << "Error. Please Enter number of seats you want";
+   		cout << "\t\tError. Please Enter number of seats you want";
   		}
-  		cout << "\n\nHow many seat do you want? (MAx 4|Min 1) : ";
+  		cout << "\n\n\t\tHow many seat do you want? (MAx 4|Min 1) : ";
      	cin >> numofseat;  
  	}
 
@@ -744,13 +808,13 @@ void user()
 		bool checkseat;
 		int position;
 		do{
-			cout << "\nSeat " << i+1;
-        	cout << "\nEnter row : ";
+			cout << "\n\t\tSeat " << i+1;
+        	cout << "\n\t\tEnter row : ";
         	cin >> row[i];
-        	cout << "Enter seat number : ";
+        	cout << "\t\tEnter seat number : ";
         	cin >> seatnum[i];
 			position = read_seat(row[i],seatnum[i]);
-			if(check_seat(mt,position) == false) cout<<"Error. This seat has been booked.\nPlease try again. ";
+			if(check_seat(mt,position) == false) cout<<"\t\tError. This seat has been booked.\n\t\tPlease try again. ";
 		}while(check_seat(mt,position) == false);
 
         update_seat(position,mt); 
@@ -760,7 +824,7 @@ void user()
 
 	show_seat(mt);
 	cin.ignore();
-	cout << "\nEnter name : ";
+	cout << "\n\n\t\tEnter name : ";
 	getline(cin,name);
 	cost_ticket(mt,row,seatnum);
 }
@@ -838,8 +902,8 @@ bool check_seat(int mt, int position)
 
 }
 
-void update_seat(int position,int mt)
-{
+void update_seat(int position,int mt){
+
 	string textline;
     vector<int> new_seat(28);
 	ifstream source;
@@ -882,10 +946,18 @@ void update_seat(int position,int mt)
 		case 12 : new_source.open("seat_m3t3.txt"); break;
 	}
 
-
-    for(int j = 0; j<i; j++){
-        new_source << new_seat[j] << endl;
-    }
+	if(position == 0){
+		for(int j = 0; j<28; j++){
+        	new_source << "0" <<endl;
+    	}
+		cout<<"Seatfile clear.";
+	}
+	else{
+		for(int j = 0; j<i; j++){
+        	new_source << new_seat[j] << endl;
+    	}
+	}
+    
     source.close();
 }
 
@@ -917,47 +989,51 @@ void show_seat(int mt){
     char row[5] = {'E','D','C','B'};
     char display[2] = {'\0', 'X'};
 
-    cout<<setw(25)<<"-----------------------------------------\n";
-    cout<<setw(25)<<"|SCREEN|\n";
+    cout <<"\n\t----------------------------------------------------";
+	cout << "\n\n\t|\t\t\tSCREEN\t\t\t|\n";
+	cout <<"\n\t----------------------------------------------------\n";
+	cout <<" \t\t 1     2     3   \t 4     5     6\n";
 
     //display normal row E-B 
 
     for(int i = 0; i<23; i = i+6){
-        cout<<row[n-1]<<"\t";
+        cout<<"\t"<<row[n-1]<<"\t";
         for(int j = i; j<6+i; j++){
-            if(j == 2+i && new_seat[j] == 1) cout<<"|X| \t";
-			if(j != 2+i && new_seat[j] == 1) cout<<"|X| ";
-			if(j == 2+i && new_seat[j] == 0) cout<<"| | \t";
-			if(j != 2+i && new_seat[j] == 0) cout<<"| | ";
+            if(j == 2+i && new_seat[j] == 1) cout<<"|X|   \t";
+			if(j != 2+i && new_seat[j] == 1) cout<<"|X|   ";
+			if(j == 2+i && new_seat[j] == 0) cout<<"| |   \t";
+			if(j != 2+i && new_seat[j] == 0) cout<<"| |   ";
 
         }
         cout<<"\n";
         n++;
     }
 
+
     //display sofa row A
-    
-    cout<<setw(28)<<"- SOFA seat -\n";
-    cout<<"A\t";
+    cout<<setw(28)<<"\n\t\t\t  -- SOFA seat --\n\n";
+	cout <<" \t\t   1     2     \t\t   3\t   4\n";
+    cout<<"\tA\t";
     for(int j = 23; j<29; j++){
         if(j == 23) cout<<setw(2)<<" ";
         else if(j < 26) {
-            if(new_seat[j] == 0) cout<<setw(2)<<"| |"<<" ";
-            else if(new_seat[j] == 1) cout<<setw(2)<<"|X|"<<" ";
+            if(new_seat[j] == 0) cout<<setw(2)<<"| |"<<"   ";
+            else if(new_seat[j] == 1) cout<<setw(2)<<"|X|"<<"   ";
         }
         else if(j > 26){
-            if(new_seat[j-1] == 0) cout<<setw(2)<<"| |"<<" ";
-            else if(new_seat[j-1] == 1) cout<<setw(2)<<"|X|"<<" ";
+            if(new_seat[j-1] == 0) cout<<setw(2)<<"  | |"<<"   ";
+            else if(new_seat[j-1] == 1) cout<<setw(2)<<"  |X|"<<"   ";
         }
-        else cout<<"\t";
+        else cout<<"\t\t";
     }
 }
 
 //add
 void cost_ticket(int mt,char *r,int *sn){
 	int cost=0;
-	cout << "Name : " << name;
-	cout << "\nSeat : ";
+	cout <<"\n\n\t----------------------------------------------------\n";
+	cout << "\t\tName : " << name;
+	cout << "\n\t\tSeat : ";
 	//cout << *r << r << &r;
 	//add price of member
 	for(int i=0;i<numofseat;i++){
@@ -976,7 +1052,7 @@ void cost_ticket(int mt,char *r,int *sn){
 			}
 		}
 	//add
-	cout << "\nTotal ticket cost : " << cost;
+	cout << "\n\t\tTotal ticket cost : " << cost;
 	promotion(cost);
 	fstream source;	
 	switch(mt){
@@ -990,8 +1066,8 @@ void cost_ticket(int mt,char *r,int *sn){
 		case 11 : source.open("Bill_m3t2.txt", ios::app); break;
 		case 12 : source.open("Bill_m3t3.txt", ios::app); break;
 	}
-	source << "\nName : " << name << "\n";
-	source << "Seat : ";
+	source << "\n\t\tName : " << name << "\n";
+	source << "\t\tSeat : ";
 	for(int i=0;i<numofseat;i++)
 	{
 		source << *(r+i) << *(sn+i) << " ";
@@ -999,8 +1075,8 @@ void cost_ticket(int mt,char *r,int *sn){
 	source << "\n";
 	source.close();
 	//add
-	cout << "\n\t**The booking is successful.**\n";
-	cout << "\n\t\t**Thank you**\n";
+	cout << "\n\t\t**The booking is successful.**\n";
+	cout << "\n\t\t\t**Thank you**\n";
 	home();
 }
 
@@ -1009,26 +1085,31 @@ void promotion(int cost){
     //bool user=false,ck_pro=false;
     string user_code, textline;
     char key;
+	bool valid_code = false;
     while(key != 'y' && key != 'Y' && key != 'n' && key != 'N'){
-        cout << "Do you have discount (Y or N) : ";
+        cout << "\n\t\tDo you have discount (Y or N) : ";
         cin >> key;
         if(key == 'y' || key == 'Y'){
-            cout << "Enter code : ";
+            cout << "\t\tEnter code : ";
             cin >> user_code;
             ifstream source;
             source.open("promotioncode.txt");
             while(getline(source,textline)){
                 if(textline == user_code){
                     cost - (cost*10)/100;
+					valid_code = true;
                 }
             }
             source.close();
-            cout << "Total ticket cost : " << cost << " Bath.\n";
+			if(!valid_code) cout<<"\t\tSorry. Invalide code.\n";
+            cout << "\t\tTotal ticket cost : " << cost << " Bath.\n";
         }else if(key =='n' || key == 'N'){
-            cout << "Total ticket cost : " << cost << " Bath.\n";
+            cout << "\t\tTotal ticket cost : " << cost << " Bath.\n";
         }else{
-            cout << "Please try again. ";
-        }
+			cout<<"\t\tInvalid Input.\n";
+			promotion(cost);
+		}
     };
+	cout <<"\t----------------------------------------------------\n";
 }
 
