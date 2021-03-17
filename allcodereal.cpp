@@ -979,13 +979,8 @@ void cost_ticket(int mt,char *r,int *sn){
 			}
 		}
 	//add
-<<<<<<< HEAD
 	cout << "\nTotal ticket cost : " << cost;
-	promotion();
-=======
 	promotion(cost);
-	//cout << "\nTotal ticket cost : " << cost;
->>>>>>> 261451bffe201e82097be52a41df12754c42fbb4
 	fstream source;	
 	switch(mt){
 		case 2 : source.open("Bill_m1t1.txt", ios::app); break;
@@ -1012,74 +1007,31 @@ void cost_ticket(int mt,char *r,int *sn){
 	home();
 }
 
-void promotion(){
-    string user_code, textline;
-    char key;
-        while(key != 'y' && key != 'Y' && key != 'n' && key != 'N'){
-            cout << "Do you have discount (Y or N) : ";
-            cin >> key;
-            if(key == 'y' || key == 'Y'){
-                cout << "Enter code : ";
-                cin >> user_code;
-                ifstream source;
-                source.open("promotioncode.txt");
-                while(getline(source,textline)){
-                    if(textline == user_code){
-                        cost = cost - (cost*10)/100;
-                    }
-                }
-				source.close();
-				cout << "Total ticket cost : " << cost << " Bath.\n";
-            }
-            else if(key =='n' || key == 'N'){
-                cout << "Total ticket cost : " << cost << " Bath.\n";
-            }
-            else{
-                cout << "Please try again. ";
-            }
-        };
-    //costs();
+
 void promotion(int cost){
-    bool user=false,ck_pro=false;
+    //bool user=false,ck_pro=false;
     string user_code, text;
     char key;
-    	do{
-        	cout << "\nDo you have promotion (Y or N) : ";
-        	cin >> key;
-        	if(key == 'y' || key == 'Y')
-            {
-            	cout << "Enter promotion : ";
-            	cin >> user_code;
-				ifstream source;
-				source.open("promotioncode.txt");
-                while(getline(source,text))
-                {
-                    if(text==user_code)
-                    {
-                        ck_pro=true;
-                    }
-                }      
-                source.close();
-                if(ck_pro==true)
-                {
-                    cout << "Total ticket cost : " << cost-cost*0.10 << " Bath.";
-                    user = true;
+    while(key != 'y' && key != 'Y' && key != 'n' && key != 'N'){
+        cout << "Do you have discount (Y or N) : ";
+        cin >> key;
+        if(key == 'y' || key == 'Y'){
+            cout << "Enter code : ";
+            cin >> user_code;
+            ifstream source;
+            source.open("promotioncode.txt");
+            while(getline(source,textline)){
+                if(textline == user_code){
+                    cost - (cost*10)/100;
                 }
-                else{
-                    cout << "your promotion code is wrong\n";
-                    user = false;
-                }
-        	}
-        	else if(key =='n' || key == 'N'){
-            	cout << "Total ticket cost : " << cost << "Bath.";
-            	user = true;
-        	}
-        	else
-            {
-            	cout << "Please try again. ";
-            	user = false;
-        	}
-    	}while(user == false);
->>>>>>> 261451bffe201e82097be52a41df12754c42fbb4
+            }
+            source.close();
+            cout << "Total ticket cost : " << cost << " Bath.\n";
+        }else if(key =='n' || key == 'N'){
+            cout << "Total ticket cost : " << cost << " Bath.\n";
+        }else{
+            cout << "Please try again. ";
+        }
+    };
 }
 
