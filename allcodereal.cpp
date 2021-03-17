@@ -60,25 +60,25 @@ void home()
 	bool a_member = false;
 	do{
 		cout << "\n\t\t***Welcome to Theater***\n";
-		cout << setw(15) << "1. for User\n";
-		cout << setw(15) << "2. for Admin\n";
-		cout << setw(15) << "0. for Exit\n";
-		cout << setw(15) << "Select option :  ";
+		cout << "1. for User\n";
+		cout << "2. for Admin\n";
+		cout << "0. for Exit\n";
+		cout << "Select option :  ";
 		cin >> op;
 		switch(op)
 		{
 			case 1 : char key;
 					 do
 					 {
-						 cout << setw(15) << "\nAre you a member? (Y/N) : ";
+						 cout << "\nAre you a member? (Y/N) : ";
 					 	 cin >> key;
 					 	 if(key == 'y' or key == 'Y')
 					 	 {
 						 	 string ch_id;
-						 	 cout << setw(15) << "Enter member id : ";
+						 	 cout << "Enter member id : ";
 						 	 cin >> ch_id;
 						 	 checkmem(ch_id,ck_member,name_mem);
-						 	 cout << "\n\t\t**Welcom K." << name_mem << " **";
+						 	 cout << "\n\t\t\t**Welcom K." << name_mem << " **";
 						 	 user();
 							 a_member = true;
 					 	 }
@@ -87,7 +87,7 @@ void home()
 						  	 char key;
 							 do
 							 {
-								 cout << stw(15) << "\nWould you like to become a member? (Y/N) : ";
+								 cout << "\nWould you like to become a member? (Y/N) : ";
 						 	 	 cin >> key;
 						 	 	 if(key == 'y' or key == 'Y')
 					 	 	 	 {
@@ -103,14 +103,14 @@ void home()
 						 	 	 }
 							 	 else 
 								 {
-									 cout << setw(15) << "Please enter y/n\n";
+									 cout << "Please enter y/n\n";
 								 }
 							 }while(be_mem==false);
 							 a_member = true;
 					 	 }
 						 else
 						 {
-							cout << setw(15) << "Please enter y/n\n";
+							cout << "Please enter y/n\n";
 
 						 }
 					 }while(a_member == false);
@@ -121,7 +121,7 @@ void home()
 					 break;
 			case 0 : c_op = true; 
 					 break;
-			default : cout << setw(15) << "\nPlease select again\n\n";
+			default : cout << "\nPlease select again\n\n";
 					  break;
 		}
 	}while(c_op == false);
@@ -134,7 +134,7 @@ void admin(){
 	bool c_pass = false;
 	int count = 0;
 	do{
-		cout << setw(15) << "\nEnter passcode : ";
+		cout << "\nEnter passcode : ";
 		passch = getch();
 		while(passch != 13){
       		pass.push_back(passch);
@@ -145,12 +145,12 @@ void admin(){
 			c_pass = true;
 		}
 		else{
-			cout << setw(15) << "\nWrong passcode!!!\n" ;
+			cout << "\nWrong passcode!!!\n" ;
 			if(count >= 4){
-				cout<< setw(15) << "System lock!!! Please wait and try again\n";
+				cout<< "System lock!!! Please wait and try again\n";
 				home();
 			}
-			cout<< setw(15) << "Please enter again.\n";
+			cout<< "Please enter again.\n";
 			count++;
 		}
 	}while(c_pass==false);	
@@ -163,15 +163,15 @@ void op_admin()
 	bool c_aop = false;
 	do{
 		cout << "\t\n< Admin menu >\n";
-		cout << setw(15) << "1. Add movie\n";
-		cout << setw(15) << "2. Change movie\n";
-		cout << setw(15) << "3. Check movie\n";
-		cout << setw(15) << "4. Check valiable seat\n";
-		cout << setw(15) << "5. Cancel reservation\n";
+		cout << "1. Add movie\n";
+		cout << "2. Change movie\n";
+		cout << "3. Check movie\n";
+		cout << "4. Check valiable seat\n";
+		cout << "5. Cancel reservation\n";
 		//add 
-		cout << setw(15) << "6. Change discount\n";
-		cout << setw(15) << "0. Exit to home\n";
-		cout << setw(15) << "Enter option : ";
+		cout << "6. Change discount\n";
+		cout << "0. Exit to home\n";
+		cout << "Enter option : ";
 		cin >> aop;
 		switch(aop){
 			case 0 : home();
@@ -196,7 +196,7 @@ void op_admin()
 			case 6 : list(6);
 					 c_aop = true;
 					 break;
-			default : cout << setw(15) << "Please enter again.\n";
+			default : cout << "Please enter again.\n";
 					  break;
 		}
 	}while(c_aop == false);		
