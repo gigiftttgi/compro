@@ -724,7 +724,12 @@ void user()
 	mt = pow(ch_movie,2)+ch_time;
 	cin.ignore();
 	show_seat(mt);
-	cout << "Price\nRow B-E : 120\nRow A : 180\n";  
+	if(ck_member==true){
+		cout << "Price\nRow B-E : 90\nRow A : 150\n"; 
+	}
+	else{
+		cout << "Price\nRow B-E : 120\nRow A : 180\n"; 
+	} 
     cout << "How many seat do you want? (MAx 4|Min 1) : ";
     cin >> numofseat;
 	while (numofseat || numofseat == 0){
@@ -761,7 +766,7 @@ void user()
 	cin.ignore();
 	cout << "\nEnter name : ";
 	getline(cin,name);
-	cost_ticket(mt,&row[4],&seatnum[28]);
+	cost_ticket(mt,row,seatnum);
 }
 
 void filebooklist(char row,int seatnum,int mt)
@@ -973,11 +978,9 @@ void cost_ticket(int mt,char *r,int *sn){
 				}else cost+=120;
 			}
 		}
-	cout << "\nTotal ticket cost : " << cost;
 	//add
-	if(ck_member == false){
-		promotion();
-	}
+	promotion();
+	//cout << "\nTotal ticket cost : " << cost;
 	fstream source;	
 	switch(mt){
 		case 2 : source.open("Bill_m1t1.txt", ios::app); break;
@@ -1008,27 +1011,28 @@ void promotion(){
     bool user;
     string user_code, textline;
     char key;
-    do{
-        cout << "\nDo you have promotion (Y or N) : ";
-        cin >> key;
-        if(key == 'y' || key == 'Y'){
-            cout << "Enter promotion : ";
-            cin >> user_code;
-			ifstream source;
-			source.open("promotion.txt");
-			while(getline(source,textline)){
-            	if(textline == user_code){
-                	cout << "Total ticket cost : " << cost - (cost*10)/100 << " Bath.";
-            	}
+    	do{
+        	cout << "Do you have promotion (Y or N) : ";
+        	cin >> key;
+        	if(key == 'y' || key == 'Y'){
+            	cout << "Enter promotion : ";
+            	cin >> user_code;
+				ifstream source;
+				source.open("promotion.txt");
+				while(getline(source,textline)){
+            		if(textline == user_code){
+                		cout << "Total ticket cost : " << cost - (cost*10)/100 << "Bath.";
+            		}
             	user = true;
-			}
-        }
-        else if(key =='n' || key == 'N'){
-            cout << "Total ticket cost : " << cost << " Bath.";
-            user = true;
-        }else{
-            cout << "Please try again. ";
-            user = false;
+				}
         	}
-    }while(user == false);
+        	else if(key =='n' || key == 'N'){
+            	cout << "Total ticket cost : " << cost << "Bath.";
+            	user = true;
+        	}
+        	else{
+            	cout << "Please try again. ";
+            	user = false;
+        	}
+    	}while(user == false);
 }
