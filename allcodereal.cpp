@@ -761,7 +761,7 @@ void user()
 	cin.ignore();
 	cout << "\nEnter name : ";
 	getline(cin,name);
-	cost_ticket(mt,row,seatnum);
+	cost_ticket(mt,&row[4],seatnum[28]);
 }
 
 void filebooklist(char row,int seatnum,int mt)
@@ -1006,32 +1006,27 @@ void promotion(){
     bool user;
     string user_code, textline;
     char key;
-	if(ck_member == true){
-		cout << cost_ticket(mt, &row[], &seatnum[]);
-	}else{
-    	do{
-        	cout << "Do you have promotion (Y or N) : ";
-        	cin >> key;
-        	if(key == 'y' || key == 'Y'){
-            	cout << "Enter promotion : ";
-            	cin >> user_code;
-				ifstream source;
-				source.open("promotion.txt");
-				while(getline(source,textline)){
-            		if(textline == user_code){
-                		cout << "Total ticket cost : " << cost - (cost*10)/100 << "Bath.";
-            		}
+    do{
+        cout << "Do you have promotion (Y or N) : ";
+        cin >> key;
+        if(key == 'y' || key == 'Y'){
+            cout << "Enter promotion : ";
+            cin >> user_code;
+			ifstream source;
+			source.open("promotion.txt");
+			while(getline(source,textline)){
+            	if(textline == user_code){
+                	cout << "Total ticket cost : " << cost - (cost*10)/100 << "Bath.";
+            	}
             	user = true;
-				}
+			}
+        }
+        else if(key =='n' || key == 'N'){
+            cout << "Total ticket cost : " << cost << "Bath.";
+            user = true;
+        }else{
+            cout << "Please try again. ";
+            user = false;
         	}
-        	else if(key =='n' || key == 'N'){
-            	cout << "Total ticket cost : " << cost << "Bath.";
-            	user = true;
-        	}
-        	else{
-            	cout << "Please try again. ";
-            	user = false;
-        	}
-    	}while(user == false);
-	}
+    }while(user == false);
 }
