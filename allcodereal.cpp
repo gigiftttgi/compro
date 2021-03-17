@@ -959,22 +959,20 @@ void cost_ticket(int mt,char *r,int *sn){
 	cout << "\nSeat : ";
 	//cout << *r << r << &r;
 	//add price of member
-	if(ck_member == true){
-		cout << *(r+i) << *(sn+i) << " ";
-		if(*(r+i) == 'A' or *(r+i) == 'a')
-		{
-			cost+=150;
-		}
-		else cost+=90;
-	}else{
 		for(int i=0;i<numofseat;i++){
-			cout << *(r+i) << *(sn+i) << " ";
-			if(*(r+i) == 'A' or *(r+i) == 'a'){
-			cost+=180;
+			if(ck_member == true){
+				cout << *(r+i) << *(sn+i) << " ";
+					if(*(r+i) == 'A' or *(r+i) == 'a'){
+						cost+=150;
+					}else{
+						cost+=90;
+					}
+			}else{
+				if(*(r+i) == 'A' or *(r+i) == 'a'){
+					cost+=180;
+				}else cost+=120;
 			}
-			else cost+=120;
 		}
-	}
 	//add
 	promotion();
 	//cout << "\nTotal ticket cost : " << cost;
