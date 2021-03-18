@@ -32,7 +32,8 @@ bool cancel_reserve(int, int);
 void edit_booklist(int , char , int );
 void reset_seat(int );
 int choose_movie_and_time();
-
+char getrow();
+char getseatnum(char );
 string rand_id();
 
 //add
@@ -63,7 +64,7 @@ int main()
 
 void home()
 {
-	char op;
+	int op;
 	bool c_op = false;
 	bool be_mem = false;
 	bool a_member = false;
@@ -80,7 +81,7 @@ void home()
 		cin >> op;
 		switch(op)
 		{
-			case '1' : char key;
+			case 1 : char key;
 					 do
 					 {
 						 cout <<"\n\t----------------------------------------------------\n";
@@ -133,10 +134,10 @@ void home()
 					 }while(a_member == false);
 					 c_op = true;
 					 break;
-			case '2' : admin();
+			case 2 : admin();
 					 c_op = true; 
 					 break;
-			case '0' : c_op = true; 
+			case 0 : c_op = true; 
 					 break;
 			default : 
 						cout<<endl;
@@ -188,7 +189,7 @@ void admin(){
 
 void op_admin()
 {
-	char aop;
+	int aop;
 	bool c_aop = false;
 	cout <<"\n\t----------------------------------------------------";
 	cout << "\n\n\t\t|\t***Admin Menu***\t|\n";
@@ -205,28 +206,28 @@ void op_admin()
 		cout << "\tEnter option : ";
 		cin >> aop;
 		switch(aop){
-			case '0' : home();
+			case 0 : home();
 					 c_aop = true;
 					 break;
-			case '1' : list(1);
+			case 1 : list(1);
 					 c_aop = true;
 					 break;
-			case '2' : list(2);
+			case 2 : list(2);
 			         c_aop = true;
 					 break;
-			case '3' : list(3);
+			case 3 : list(3);
 			   	     c_aop = true;
 					 break;
-			case '4' : list(4);
+			case 4 : list(4);
 			   	     c_aop = true;
 					 break;	
-			case '5' : list(5);
+			case 5 : list(5);
 			   	     c_aop = true;
 					 break;		
-			case '6' : list(6);
+			case 6 : list(6);
 					 c_aop = true;
 					 break;
-			case '7' : list(7);
+			case 7 : list(7);
 					 c_aop = true;
 					 break;
 			default : cout << setw(30) << "\t\tPlease enter again.\n";
@@ -287,19 +288,10 @@ void list(int l){
 		cout << "\n\t\t< Cancel Reservation >\n";
 
 		mt = choose_movie_and_time();
+		show_seat(mt);
 
-        do{
-        	cout << "\n\t\tEnter row : ";
-			cin >> row;
-			if(row > 'E' || row < 'A') cout <<"\t\tError. Row must be A-E\n";
-		}while(row > 'E' || row < 'A');
-
-		do{
-			cout << "\t\tEnter seat number : ";
-        	cin >> char_seatnum;
-			if(row == 'A' && char_seatnum > '4' || char_seatnum < '0') cout <<"\t\tError. Row must be 1-4\n";
-			if(row != 'A' && char_seatnum > '6' || char_seatnum < '0') cout <<"\t\tError. Row must be 1-6\n";
-		}while(char_seatnum > '6' || char_seatnum < '0');
+        row = getrow();
+		char_seatnum = getseatnum(row);
 
 		seatnum = char_seatnum - '0';
     	
@@ -736,7 +728,8 @@ void user()
 	mt = choose_movie_and_time();
 
 	show_seat(mt);
- 	cout << "\n\n\t\tPrice Row B-E : 120\tRow A : 180\n\n";
+ 	if(ck_member==true) cout << "\n\n\t\tPrice Row B-E : 90\tRow A : 150\n\n";
+ 	else cout << "\n\n\t\tPrice Row B-E : 120\tRow A : 180\n\n";
 
 	do{
 		cout << "\tHow many seat do you want? (Max 4|Min 1) : ";
@@ -754,28 +747,15 @@ void user()
 		cout << "\n\t\tSeat " << i+1;
 
 		do{
-        	cout << "\n\t\tEnter row : ";
-			cin >> row[i];
-			if(row[i] > 'E' || row[i] < 'A') cout <<"\t\tError. Row must be A-E\n";
-		}while(row[i] > 'E' || row[i] < 'A');
-
-		do{
-			cout << "\t\tEnter seat number : ";
-        	cin >> char_seatnum;
-			if(row[i] == 'A' && char_seatnum > '4' || char_seatnum < '0') cout <<"\t\tError. Row must be 1-4\n";
-			if(row[i] != 'A' && char_seatnum > '6' || char_seatnum < '0') cout <<"\t\tError. Row must be 1-6\n";
-		}while(char_seatnum > '6' || char_seatnum < '0');
-
-		seatnum[i] = char_seatnum - '0';
-
-		do{
+			row[i] = getrow();
+			char_seatnum = getseatnum(row[i]);
+			seatnum[i] = char_seatnum - '0';
 			position = read_seat(row[i],seatnum[i]);
 			if(check_seat(mt,position) == false) cout<<"\t\tError. This seat has been booked.\n\t\tPlease try again. ";
 			if(position > 28) cout<<"\t\tError. Invalid seat.\n\t\tPlease try again";
-		}while(check_seat(mt,position) == false && position > 28);
+		}while(check_seat(mt,position) == false || position > 28);
 
-        update_seat(position,mt); 
-		filebooklist(row[i],seatnum[i],mt);
+		update_seat(position,mt);
 
     }
 
@@ -1058,12 +1038,13 @@ void cost_ticket(int mt,char *r,int *sn){
 
 void promotion(int cost){
     //bool user=false,ck_pro=false;
-    string user_code, textline,key;
- 	bool valid_code = false,ck_pro=false;
+    string user_code, textline;
+    char key;
+ bool valid_code = false,ck_pro=false;
     do{
         cout << "\n\t\tDo you have discount (Y or N) : ";
         cin >> key;
-        if(key == "y" || key == "Y"){
+        if(key == 'y' || key == 'Y'){
             cout << "\t\tEnter code : ";
             cin >> user_code;
             ifstream source;
@@ -1071,29 +1052,29 @@ void promotion(int cost){
             while(getline(source,textline)){
                 if(textline == user_code){
                     cost = cost - (cost*10)/100;
-     				valid_code = true;
+     valid_code = true;
                 }
             }
             source.close();
-   	if(!valid_code) 
-    {
-    	cout<<"\t\tSorry. Invalide code.\n";
-    	ck_pro=false;
-   	}
-   	else
-   	{
-    	cout << "\t\tTotal ticket cost : " << cost << " Bath.\n";
-    	ck_pro=true;
-   	}
-    }else if(key == "N" || key == "n"){
+   if(!valid_code) 
+   {
+    cout<<"\t\tSorry. Invalide code.\n";
+    ck_pro=false;
+   }
+   else
+   {
+    cout << "\t\tTotal ticket cost : " << cost << " Bath.\n";
+    ck_pro=true;
+   }
+        }else if(key =='n' || key == 'N'){
             cout << "\t\tTotal ticket cost : " << cost << " Bath.\n";
-   	ck_pro=true;
-    }else
-  	{
-   		cout<<"\t\tInvalid Input.\n";
-   		ck_pro=false;
-   		//promotion(cost);
-  	}
+   ck_pro=true;
+        }else
+  {
+   cout<<"\t\tInvalid Input.\n";
+   ck_pro=false;
+   //promotion(cost);
+  }
     }while(ck_pro==false);
  cout <<"\t----------------------------------------------------\n";
 }
@@ -1123,4 +1104,26 @@ int choose_movie_and_time(){
 
 	mt = pow(ch_movie,2)+ch_time;
 	return mt;
+}
+
+char getrow(){
+	char row;
+	do{
+        cout << "\n\t\tEnter row : ";
+		cin >> row;
+		if(row > 'E' || row < 'A') cout <<"\t\tError. Row must be A-E\n";
+	}while(row > 'E' || row < 'A');
+
+	return row;
+}
+
+char getseatnum(char row){
+	char seatnum;
+	do{
+		cout << "\t\tEnter seat number : ";
+        cin >> seatnum;
+		if(row == 'A' && seatnum > '4' || seatnum < '0') cout <<"\t\tError. Row must be 1-4\n";
+		if(row != 'A' && seatnum > '6' || seatnum < '0') cout <<"\t\tError. Row must be 1-6\n";
+	}while(seatnum > '6' || seatnum < '0');
+	return seatnum;
 }
