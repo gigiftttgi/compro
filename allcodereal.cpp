@@ -207,7 +207,7 @@ void admin(){
 
 void op_admin()
 {
-	int aop;
+	string aop;
 	bool c_aop = false;
 	cout <<"\n\t----------------------------------------------------";
 	cout << "\n\n\t\t|\t***Admin Menu***\t|\n";
@@ -223,37 +223,33 @@ void op_admin()
 		cout << "\t0. Exit to home"<<endl;
 		cout << "\tEnter option : ";
 		cin >> aop;
-		switch(aop){
-			case 0 : home();
-					 c_aop = true;
-					 break;
-			case 1 : list(1);
-					 c_aop = true;
-					 break;
-			case 2 : list(2);
-			         c_aop = true;
-					 break;
-			case 3 : list(3);
-			   	     c_aop = true;
-					 break;
-			case 4 : list(4);
-			   	     c_aop = true;
-					 break;	
-			case 5 : list(5);
-			   	     c_aop = true;
-					 break;		
-			case 6 : list(6);
-					 c_aop = true;
-					 break;
-			case 7 : list(7);
-					 c_aop = true;
-					 break;
-			default : cout << setw(30) << "\t\tPlease enter again.\n";
-					  break;
-		}
+			if(aop == "0"){
+				home();
+				c_aop = true;	
+			}else if(aop == "1"){
+				list(1);
+				c_aop = true;
+			}else if(aop == "2"){
+				list(2);
+			    c_aop = true;
+			}else if(aop == "3"){
+				list(3);
+			   	c_aop = true;
+			}else if(aop == "4"){
+				list(4);
+			   	c_aop = true;
+			}else if(aop == "5"){
+				list(5);
+			   	c_aop = true;
+			}else if(aop == "6"){
+				list(6);
+				c_aop = true;
+			}else if(aop == "7"){
+				list(7);
+				c_aop = true;
+			}else cout << setw(30) << "\t\tPlease enter again.\n";
 	}while(c_aop == false);		
 }
-
 
 void list(int l){
 	string *m = &movie[0];
