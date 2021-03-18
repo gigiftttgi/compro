@@ -64,7 +64,7 @@ int main()
 
 void home()
 {
-	int op;
+	string op;
 	bool c_op = false;
 	bool be_mem = false;
 	bool a_member = false;
@@ -79,9 +79,9 @@ void home()
 		cout << setw(30) << "\t0. for Exit\n";
 		cout << setw(30) << "\t\tSelect option :  ";
 		cin >> op;
-		switch(op)
-		{
-			case 1 : string key;
+		if(op=="1")
+        {
+            string key;
 					 do
 					 {
 						 cout <<"\n\t----------------------------------------------------\n";
@@ -89,24 +89,38 @@ void home()
 					 	 cin >> key;
 					 	 if(key == "y" || key == "Y")
 					 	 {
-						 	 string ch_id;
-						 	 cout << "\t\tEnter member id : ";
-						 	 cin >> ch_id;
-						 	 checkmem(ch_id,ck_member,name_mem);
-							 cout<<endl;
-						 	 cout << "\t\t\t**Welcome K." << name_mem << " **";
-						 	 user();
-							 a_member = true;
+						 	do{
+								 string ch_id;
+								 cout << "\t\tEnter member id (0 to exit): ";
+						 	 	 cin >> ch_id;
+						 	 	 checkmem(ch_id,ck_member,name_mem);
+								 if(ck_member==false)
+								 {
+                                     if(ch_id=="0")
+                                     {
+                                         ck_member=true;
+                                     }
+                                     else
+                                        cout << "\t\tWrong id!!\n";
+								 }
+								 else
+								 {
+							 	 cout<<endl;
+						 	 	 cout << "\t\t\t**Welcome K." << name_mem << " **";
+						 	 	 user();
+							 	 a_member = true;
+								 }
+							  }while(ck_member==false);
 					 	 }
 					 	 else if(key == "N" || key == "n")
 					 	 {
-						  	 string key;
+						  	 string key1;
 							 do
 							 {
 								 
 								 cout << "\t\tWould you like to become a member? (Y/N) : ";
-						 	 	 cin >> key;
-						 	 	 if(key == "y" || key == "Y")
+						 	 	 cin >> key1;
+						 	 	 if(key1 == "y" || key1 == "Y")
 					 	 	 	 {
 							  	 	 member(ck_member,name_mem);
 									 cout<<endl;
@@ -114,7 +128,7 @@ void home()
 							 	 	 user();
 									 be_mem=true;
 					 	 	 	 }
-						 	 	 else if(key == "N" || key == "n")
+						 	 	 else if(key1 == "N" || key1 == "n")
 						 	     {
 							 	 	 user();
 									 be_mem=true;
@@ -133,16 +147,20 @@ void home()
 						 }
 					 }while(a_member == false);
 					 c_op = true;
-					 break;
-			case 2 : admin();
-					 c_op = true; 
-					 break;
-			case 0 : c_op = true; 
-					 break;
-			default : 
-						cout<<endl;
-						cout << "\n\t\tPlease select again\n\n";
-						break;
+        }
+		else if(op=="2")
+        {
+            admin();
+			c_op = true; 
+        }
+		else if(op=="0")
+        {
+            c_op = true; 
+        }
+        else
+		{
+			cout<<endl;
+			cout << "\n\t\tPlease select again\n\n";
 		}
 	}while(c_op == false);
 }
