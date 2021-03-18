@@ -33,7 +33,7 @@ void edit_booklist(int , char , int );
 void reset_seat(int );
 int choose_movie_and_time();
 char getrow();
-char getseatnum(char );
+int getseatnum(char );
 string rand_id();
 
 //add
@@ -45,8 +45,9 @@ string name;
 string name_mem;
 int new_seat[28];
 int seatnum[4];
-char row[4],char_numofseat,char_ch_movie, char_ch_time,char_seatnum;
+char row[4];
 int ch_movie,ch_time,numofseat=0,mt;
+string string_numofseat,string_ch_time,string_ch_movie,string_seatnum;
 bool ck_member = false;
 int cost = 0;
 
@@ -250,6 +251,7 @@ void op_admin()
 			}else cout << setw(30) << "\t\tPlease enter again.\n";
 	}while(c_aop == false);		
 }
+
 
 void list(int l){
 	string *m = &movie[0];
@@ -745,13 +747,16 @@ void user()
  	if(ck_member==true) cout << "\n\n\t\tPrice Row B-E : 90\tRow A : 150\n\n";
  	else cout << "\n\n\t\tPrice Row B-E : 120\tRow A : 180\n\n";
 
+	cout << "\tHow many seat do you want? (Max 4|Min 1) : ";
+    cin >> string_numofseat;
+	
 	do{
+		cout<<"\tPlease input 1-4\n";
 		cout << "\tHow many seat do you want? (Max 4|Min 1) : ";
-    	cin >> char_numofseat;
-		if(char_numofseat > '4'|| char_numofseat <= '0') cout << "\tError. seat must be 1-4 Please input Again.\n";
-	}while(char_numofseat > '4' || char_numofseat <= '0');
+    	cin >> string_numofseat;
+	}while(string_numofseat != "1" && string_numofseat != "2" && string_numofseat != "3" && string_numofseat != "4");
 
-	numofseat = char_numofseat - '0';
+	numofseat = stoi(string_numofseat);
 
     for(int i=0;i<numofseat;i++)
     {
@@ -762,8 +767,8 @@ void user()
 
 		do{
 			row[i] = getrow();
-			char_seatnum = getseatnum(row[i]);
-			seatnum[i] = char_seatnum - '0';
+			string_seatnum = getseatnum(row[i]);
+			seatnum[i] = stoi(string_seatnum);
 			position = read_seat(row[i],seatnum[i]);
 			if(check_seat(mt,position) == false) cout<<"\t\tError. This seat has been booked.\n\t\tPlease try again. ";
 			if(position > 28) cout<<"\t\tError. Invalid seat.\n\t\tPlease try again";
@@ -1099,45 +1104,59 @@ int choose_movie_and_time(){
 			cout << "\tTime   " << st[i] << "\n";
 	}
 
-	do{
-		cout << "\t\tChoose movie (1-3) : ";
-		cin >> char_ch_movie;
-		if(char_ch_movie > '3'|| char_ch_movie <= '0') cout << "\t\tThis movie does not exist. Please input 1-3.\n";
-	}while (char_ch_movie > '3'|| char_ch_movie <= '0');
-
-
+	cout<<"\t\tChoose movie (1-3) :";
+	cin>>string_ch_movie;
 
 	do{
+		cout<<"\tPlease input 1-3\n";
+		cout<<"\t\tChoose movie (1-3) :";
+		cin>>string_ch_movie;
+	}while(string_ch_movie != "1" && string_ch_movie != "2" && string_ch_movie != "3");
+
+
+	cout << "\t\tChoose Time (1-3) : ";
+	cin >> string_ch_time;
+
+	do{
+		cout<<"\tPlease input 1-3\n";
 		cout << "\t\tChoose Time (1-3) : ";
-		cin >> char_ch_time;
-		if(char_ch_time > '3'|| char_ch_time <= '0')  cout << "\t\tThis time does not exist. Please input 1-3.\n";
-	}while(char_ch_time > '3'|| char_ch_time <= '0');
+		cin >> string_ch_time;
+	}while(string_ch_time != "1" && string_ch_time != "2" && string_ch_time != "3");
 
-	ch_movie = char_ch_movie -'0';
-	ch_time = char_ch_time -'0';
+	ch_movie = stoi(string_ch_movie);
+	ch_time = stoi(string_ch_time);
 
 	mt = pow(ch_movie,2)+ch_time;
 	return mt;
 }
 
 char getrow(){
-	char row;
-	do{
-        cout << "\n\t\tEnter row : ";
-		cin >> row;
-		if(row > 'E' || row < 'A') cout <<"\t\tError. Row must be A-E\n";
-	}while(row > 'E' || row < 'A');
+	
+	string row;
+	cout << "\n\t\tEnter row : ";
+	cin >> row;
 
-	return row;
+	do{
+        cout << "Please enter A,B,C,D,E : ";
+		cout << "\n\t\tEnter row : ";
+		cin >> row;
+	}while(row != "A" && row != "B" && row != "C" && row != "D" && row != "E");
+
+	char char_row = row[0];
+
+	return char_row;
 }
 
-char getseatnum(char row){
-	char seatnum;
+int getseatnum(char row){
+
+	string seatnum;
+	cout << "\t\tEnter seat number : ";
+    cin >> seatnum;
+
 	do{
-		cout << "\t\tEnter seat number : ";
-        cin >> seatnum;
-		if(row == 'A' && seatnum > '4' || seatnum < '0') cout <<"\t\tError. Row must be 1-4\n";
-		if(row != 'A' && seatnum > '6' || seatnum < '0') cout <<"\t\tError. Row must be 1-6\n";
-	}while(seatnum > '6' || seatnum < '0');
-	return seatnum;
+		if(row == 'A' && seatnum != "1" && seatnum != "2"&& seatnum != "3"&& seatnum != "4") cout <<"\t\tError. Row must be 1-4\n";
+		if(row != 'A' && seatnum != "1" && seatnum != "2"&& seatnum != "3"&& seatnum != "4" && seatnum != "5" && seatnum != "6") cout <<"\t\tError. Row must be 1-6\n";
+	}while(seatnum != "1" && seatnum != "2"&& seatnum != "3"&& seatnum != "4" && seatnum != "5" && seatnum != "6");
+	
+	return stoi(seatnum);
 }
