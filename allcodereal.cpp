@@ -63,7 +63,7 @@ int main()
 
 void home()
 {
-	int op;
+	char op;
 	bool c_op = false;
 	bool be_mem = false;
 	bool a_member = false;
@@ -80,7 +80,7 @@ void home()
 		cin >> op;
 		switch(op)
 		{
-			case 1 : char key;
+			case '1' : char key;
 					 do
 					 {
 						 cout <<"\n\t----------------------------------------------------\n";
@@ -133,10 +133,10 @@ void home()
 					 }while(a_member == false);
 					 c_op = true;
 					 break;
-			case 2 : admin();
+			case '2' : admin();
 					 c_op = true; 
 					 break;
-			case 0 : c_op = true; 
+			case '0' : c_op = true; 
 					 break;
 			default : 
 						cout<<endl;
@@ -188,7 +188,7 @@ void admin(){
 
 void op_admin()
 {
-	int aop;
+	char aop;
 	bool c_aop = false;
 	cout <<"\n\t----------------------------------------------------";
 	cout << "\n\n\t\t|\t***Admin Menu***\t|\n";
@@ -205,28 +205,28 @@ void op_admin()
 		cout << "\tEnter option : ";
 		cin >> aop;
 		switch(aop){
-			case 0 : home();
+			case '0' : home();
 					 c_aop = true;
 					 break;
-			case 1 : list(1);
+			case '1' : list(1);
 					 c_aop = true;
 					 break;
-			case 2 : list(2);
+			case '2' : list(2);
 			         c_aop = true;
 					 break;
-			case 3 : list(3);
+			case '3' : list(3);
 			   	     c_aop = true;
 					 break;
-			case 4 : list(4);
+			case '4' : list(4);
 			   	     c_aop = true;
 					 break;	
-			case 5 : list(5);
+			case '5' : list(5);
 			   	     c_aop = true;
 					 break;		
-			case 6 : list(6);
+			case '6' : list(6);
 					 c_aop = true;
 					 break;
-			case 7 : list(7);
+			case '7' : list(7);
 					 c_aop = true;
 					 break;
 			default : cout << setw(30) << "\t\tPlease enter again.\n";
