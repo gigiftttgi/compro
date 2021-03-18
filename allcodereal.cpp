@@ -783,8 +783,8 @@ void user()
 	cout <<"\n\t----------------------------------------------------\n";
 	for(int i=0;i<3;i++)
 	{
-		cout << "\t\tTheater " << i+1 << " : " << movie[i] << "\n";
-		cout << "\t\tTime   " << st[i] << "\n";
+		cout << "\tTheater " << i+1 << " : " << movie[i] << "\n";
+		cout << "\tTime   " << st[i] << "\n";
 	}
 	
 	do{
@@ -803,7 +803,8 @@ void user()
 	mt = pow(ch_movie,2)+ch_time;
 
 	show_seat(mt);
- 	cout << "\n\n\t\tPrice Row B-E : 120\tRow A : 180\n\n";  
+ 	cout << "\n\n\t\tPrice Row B-E : 120\tRow A : 180\n\n";
+
     cout << "\tHow many seat do you want? (MAx 4|Min 1) : ";
     cin >> numofseat;
  	while (numofseat || numofseat == 0){
