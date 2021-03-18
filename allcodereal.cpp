@@ -386,7 +386,7 @@ void list(int l){
 		}
 
 		int mt = pow(ch_movie,2)+ch_time;
-		update_seat(0,mt);
+		update_seat(-1,mt);
 		cout<<"\n";
 		edit_booklist(mt,'0',0);
 		op_admin();
@@ -961,7 +961,7 @@ void update_seat(int position,int mt){
 		case 12 : new_source.open("seat_m3t3.txt"); break;
 	}
 
-	if(position == 0){
+	if(position == -1){
 		for(int j = 0; j<28; j++){
         	new_source << "0" <<endl;
     	}
