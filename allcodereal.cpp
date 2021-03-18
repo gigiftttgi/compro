@@ -17,7 +17,6 @@ void op_admin();
 void user();
 void list(int);
 void filebooklist(char,int,int);
-//void bill(int,char *,int *);
 void update_seat(int,int);
 void show_seat(int);
 void valiable_seat(int);
@@ -34,7 +33,6 @@ void reset_seat(int );
 
 string rand_id();
 
-//add
 string discount;
 string st[3] = {"11:00 - 13:00 | 14:30 - 16:30 | 18:30 - 20:30","11:30 - 13:30 | 15:00 - 17:00 | 19:00 - 21:00","12:00 - 14:00 | 15:30 - 17:30 | 19:30 - 21:30"};
 string booklist[100],book;
@@ -233,7 +231,6 @@ void op_admin()
 		}
 	}while(c_aop == false);		
 }
-
 
 void list(int l){
 	string *m = &movie[0];
@@ -690,8 +687,6 @@ void ppl_seat(int mt){
 	op_admin();
 }
 
-
-
 void member(bool &ck_member,string &name_mem){
     string mem_id;
     int id[5];
@@ -717,7 +712,6 @@ string rand_id()
     bool use = false;
     do
     {
-        //string realid;
         use = false;
         realid.clear();
         srand(time(0));
@@ -729,7 +723,6 @@ string rand_id()
         {
 		    realid.push_back(i + '0');
 	    }
-        //cout << realid << " ";
         ifstream source;
         source.open("member.txt");
         while(getline(source,text))
@@ -741,17 +734,14 @@ string rand_id()
             if(text.substr(start,end-start)==realid)
             {
                 use = true;
-                //realid.clear();
             }
             start = end+1;
             end = text.find_first_of(" ",start);
         }
     }
     source.close();
-    //memid = realid;
     }while(use==true);
     return realid;
-    
 }
 
 void checkmem(string key,bool &ck_member,string &name_mem)
@@ -1058,13 +1048,11 @@ void show_seat(int mt){
     }
 }
 
-//add
 void cost_ticket(int mt,char *r,int *sn){
 	int cost=0;
 	cout <<"\n\n\t----------------------------------------------------\n";
 	cout << "\t\tName : " << name;
 	cout << "\n\t\tSeat : ";
-	//cout << *r << r << &r;
 	//add price of member
 	for(int i=0;i<numofseat;i++){
 		if(ck_member == true){
@@ -1081,7 +1069,6 @@ void cost_ticket(int mt,char *r,int *sn){
 				}else cost+=120;
 			}
 		}
-	//add
 	cout << "\n\t\tTotal ticket cost : " << cost;
 	promotion(cost);
 	fstream source;	
@@ -1104,7 +1091,6 @@ void cost_ticket(int mt,char *r,int *sn){
 	}
 	source << "\n";
 	source.close();
-	//add
 	cout << "\n\t\t**The booking is successful.**\n";
 	cout << "\n\t\t\t**Thank you**\n";
 	home();
@@ -1112,7 +1098,6 @@ void cost_ticket(int mt,char *r,int *sn){
 
 
 void promotion(int cost){
-    //bool user=false,ck_pro=false;
     string user_code, textline;
     char key;
 	bool valid_code = false;
