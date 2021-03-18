@@ -1154,10 +1154,5 @@ int getseatnum(char row){
 		if(row != 'A' && seatnum != "1" && seatnum != "2"&& seatnum != "3"&& seatnum != "4" && seatnum != "5" && seatnum != "6") cout <<"\t\tError. Row must be 1-6\n";
 	}while(seatnum != "1" && seatnum != "2"&& seatnum != "3"&& seatnum != "4" && seatnum != "5" && seatnum != "6");
 	
-	if(seatnum == "1") return 1;
-	if(seatnum == "2") return 2;
-	if(seatnum == "3") return 3;
-	if(seatnum == "4") return 4;
-	if(seatnum == "5") return 5;
-	if(seatnum == "6") return 6;
+	return stoi(seatnum);
 }
