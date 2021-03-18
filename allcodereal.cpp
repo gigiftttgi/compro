@@ -1058,13 +1058,12 @@ void cost_ticket(int mt,char *r,int *sn){
 
 void promotion(int cost){
     //bool user=false,ck_pro=false;
-    string user_code, textline;
-    char key;
+    string user_code, textline,key;
  	bool valid_code = false,ck_pro=false;
     do{
         cout << "\n\t\tDo you have discount (Y or N) : ";
         cin >> key;
-        if(key == 'y' || key == 'Y'){
+        if(key == "y" || key == "Y"){
             cout << "\t\tEnter code : ";
             cin >> user_code;
             ifstream source;
@@ -1086,7 +1085,7 @@ void promotion(int cost){
     	cout << "\t\tTotal ticket cost : " << cost << " Bath.\n";
     	ck_pro=true;
    	}
-    }else if(key =='n' || key == 'N'){
+    }else if(key == "N" || key == "n"){
             cout << "\t\tTotal ticket cost : " << cost << " Bath.\n";
    	ck_pro=true;
     }else
