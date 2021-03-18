@@ -34,6 +34,7 @@ void reset_seat(int );
 int choose_movie_and_time();
 char getrow();
 int getseatnum(char );
+void reset_bill(int );
 string rand_id();
 
 //add
@@ -342,6 +343,7 @@ void list(int l){
 		mt = choose_movie_and_time();
 
 		reset_seat(mt);
+		reset_bill(mt);
 		cout<<"\n";
 		edit_booklist(mt,'0',0);
 		op_admin();
@@ -772,6 +774,7 @@ void user()
 		}while(check_seat(mt,position) == false || position > 28);
 
 		update_seat(position,mt);
+		filebooklist(row[i],seatnum[i],mt);
 
     }
 
@@ -796,6 +799,7 @@ void filebooklist(char row,int seatnum,int mt)
 		case 11 : source.open("Booklist_m3t2.txt", ios::app); break;
 		case 12 : source.open("Booklist_m3t3.txt", ios::app); break;
 	}
+
     source << row << "\n";
     source << seatnum << "\n";
 	source.close();
@@ -877,6 +881,30 @@ void reset_seat(int mt){
 	new_source.close();
 
 
+
+}
+
+void reset_bill(int mt){
+
+	ofstream source;
+	string textline;
+	switch(mt){
+		case 2 : source.open("Bill_m1t1.txt", ios::app); break;
+		case 3 : source.open("Bill_m1t2.txt", ios::app); break;
+		case 4 : source.open("Bill_m1t3.txt", ios::app); break;
+		case 5 : source.open("Bill_m2t1.txt", ios::app); break;
+		case 6 : source.open("Bill_m2t2.txt", ios::app); break;
+		case 7 : source.open("Bill_m2t3.txt", ios::app); break;
+		case 10 : source.open("Bill_m3t1.txt", ios::app); break;
+		case 11 : source.open("Bill_m3t2.txt", ios::app); break;
+		case 12 : source.open("Bill_m3t3.txt", ios::app); break;
+	}
+
+	
+	source << " ";
+	cout<<"\t\t*** Bill clear. *** ";
+
+	source.close();
 
 }
 
