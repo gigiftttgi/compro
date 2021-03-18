@@ -81,13 +81,13 @@ void home()
 		cin >> op;
 		switch(op)
 		{
-			case 1 : char key;
+			case 1 : string key;
 					 do
 					 {
 						 cout <<"\n\t----------------------------------------------------\n";
 						 cout << "\t\tAre you a member? (Y/N) : ";
 					 	 cin >> key;
-					 	 if(key == 'y' || key == 'Y')
+					 	 if(key == "y" || key == "Y")
 					 	 {
 						 	 string ch_id;
 						 	 cout << "\t\tEnter member id : ";
@@ -98,15 +98,15 @@ void home()
 						 	 user();
 							 a_member = true;
 					 	 }
-					 	 else if(key == 'N' || key == 'n')
+					 	 else if(key == "N" || key == "n")
 					 	 {
-						  	 char key;
+						  	 string key;
 							 do
 							 {
 								 
 								 cout << "\t\tWould you like to become a member? (Y/N) : ";
 						 	 	 cin >> key;
-						 	 	 if(key == 'y' || key == 'Y')
+						 	 	 if(key == "y" || key == "Y")
 					 	 	 	 {
 							  	 	 member(ck_member,name_mem);
 									 cout<<endl;
@@ -114,7 +114,7 @@ void home()
 							 	 	 user();
 									 be_mem=true;
 					 	 	 	 }
-						 	 	 else if(key == 'N' || key == 'n')
+						 	 	 else if(key == "N" || key == "n")
 						 	     {
 							 	 	 user();
 									 be_mem=true;
