@@ -220,7 +220,7 @@ void op_admin()
 		cout << "\t3. Check movie"<<endl;
 		cout << "\t4. Check valiable seat"<<endl;
 		cout << "\t5. Cancel reservation"<<endl;
-		cout << "\t6. Change discount"<<endl;
+		cout << "\t6. Add discount"<<endl;
 		cout << "\t7. Reset seat"<<endl;
 		cout << "\t0. Exit to home"<<endl;
 		cout << "\tEnter option : ";
