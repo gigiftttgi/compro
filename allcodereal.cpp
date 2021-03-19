@@ -332,7 +332,7 @@ void list(int l){
         		cin >> discount;
         		fstream source;
         		source.open("promotioncode.txt",ios::app);
-        		source << discount << endl;
+        		source << discount << "\n";
         		source.close();
     		}
 		op_admin();
